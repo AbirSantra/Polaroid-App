@@ -11,10 +11,7 @@ const AuthLayout = () => {
         <Navigate to="/" />
       ) : (
         <>
-          <section className="flex flex-1 flex-col items-center justify-center">
-            <Outlet />
-          </section>
-          <section className="hidden h-screen w-1/2 flex-col items-center justify-center bg-gray-50 py-32 font-poppins lg:flex">
+          <section className="hidden h-screen w-1/2 flex-col items-center justify-center bg-gray-50 py-32 font-poppins md:flex">
             {/* Logo */}
             <div className="my-auto flex items-center gap-4">
               <div className="flex h-16 w-16 items-center justify-center">
@@ -27,6 +24,9 @@ const AuthLayout = () => {
               <p>Capture Moments.</p>
               <p>Share Stories.</p>
             </div>
+          </section>
+          <section className="flex flex-1 flex-col items-center justify-center">
+            <Outlet />
           </section>
         </>
       )}
