@@ -96,7 +96,7 @@ const SignupForm = () => {
             <Button variant={"primary"} type="submit">
               Sign Up
             </Button>
-            <Button variant={"outline"} type="submit" className="text-gray-500">
+            <Button variant={"outline"} className="text-gray-500">
               <img
                 src={googleLogo}
                 alt="Google Logo"
