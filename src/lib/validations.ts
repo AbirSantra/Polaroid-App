@@ -1,6 +1,9 @@
 import * as z from "zod";
 
 export const SignUpValidation = z.object({
+  fullName: z
+    .string()
+    .min(2, { message: "Fullname must be atleast 2 characters." }),
   username: z
     .string()
     .min(2, { message: "Username must be atleast 2 characters." }),

@@ -11,23 +11,37 @@ import { useForm } from "react-hook-form";
 import { SignUpValidation } from "@/lib/validations";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { AtSign, KeyRound, Mail } from "lucide-react";
+import { AtSign, KeyRound, Mail, UserRound } from "lucide-react";
 import PolaroidLogo from "@/assets/polaroid-logo.png";
 import googleLogo from "@/assets/google-logo.png";
 import { Link } from "react-router-dom";
+import { useSignUpUser } from "@/lib/tanstack-query/queries";
 
 const SignupForm = () => {
   const form = useForm<z.infer<typeof SignUpValidation>>({
     resolver: zodResolver(SignUpValidation),
     defaultValues: {
+      fullName: "",
       username: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = () => {
-    console.log("Form Submitted");
+  const {
+    mutateAsync: signUpUser,
+    isPending: isSignUpPending,
+    isError: isSignUpError,
+    isSuccess: isSignUpSuccess,
+  } = useSignUpUser();
+
+  const onSubmit = async (user: z.infer<typeof SignUpValidation>) => {
+    try {
+      const newUser = await signUpUser(user);
+      console.log(newUser);
+    } catch (error) {
+      console.log("Error: ", error);
+    }
   };
 
   return (
@@ -41,6 +55,23 @@ const SignupForm = () => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full space-y-4"
         >
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    placeholder="Fullname"
+                    type="text"
+                    icon={<UserRound size={20} />}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="username"
