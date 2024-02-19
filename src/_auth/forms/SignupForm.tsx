@@ -18,6 +18,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSignInUser, useSignUpUser } from "@/lib/tanstack-query/queries";
 import { useUserContext } from "@/context/AuthContext";
 import { toast } from "sonner";
+import { AxiosError } from "axios";
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -42,20 +43,11 @@ const SignupForm = () => {
   const onSubmit = async (user: z.infer<typeof SignUpValidation>) => {
     try {
       const newUser = await signUpUser(user);
-      if (!newUser.success) {
-        toast(newUser.message);
-        return;
-      } else {
+      if (newUser.success) {
         toast("Account created!");
       }
 
-      const signedInUser = await signInUser(user);
-      if (!signedInUser.success) {
-        toast(
-          "Auto Sign in failed. Please sign in to your new account manually"
-        );
-        return;
-      }
+      await signInUser(user);
 
       const isLoggedIn = await checkAuthUser();
       if (isLoggedIn) {
@@ -64,6 +56,9 @@ const SignupForm = () => {
         navigate("/");
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        toast(error.response?.data.message);
+      }
       console.log("Error: ", error);
     }
   };

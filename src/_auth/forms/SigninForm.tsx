@@ -18,6 +18,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSignInUser } from "@/lib/tanstack-query/queries";
 import { toast } from "sonner";
 import { useUserContext } from "@/context/AuthContext";
+import { AxiosError } from "axios";
 
 const SigninForm = () => {
   const navigate = useNavigate();
@@ -36,11 +37,7 @@ const SigninForm = () => {
 
   const onSubmit = async (user: z.infer<typeof SignInValidation>) => {
     try {
-      const signedInUser = await signInUser(user);
-      if (!signedInUser.success) {
-        toast(signedInUser.message);
-        return;
-      }
+      await signInUser(user);
 
       const isLoggedIn = await checkAuthUser();
       if (isLoggedIn) {
@@ -49,6 +46,9 @@ const SigninForm = () => {
         navigate("/");
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        toast(error.response?.data.message);
+      }
       console.log("Error: ", error);
     }
   };

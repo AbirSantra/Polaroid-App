@@ -34,9 +34,9 @@ export const signUpUser = async (user: INewUser) => {
   try {
     const response = await authApi.post("/user/register", user);
     return response.data;
-  } catch (error: any) {
+  } catch (error) {
     console.log(error);
-    return error.response.data;
+    throw error;
   }
 };
 
@@ -44,9 +44,9 @@ export const signInUser = async (user: ISignInUser) => {
   try {
     const response = await authApi.post("/user/login", user);
     return response.data;
-  } catch (error: any) {
+  } catch (error) {
     console.log(error);
-    return error.response.data;
+    throw error;
   }
 };
 
@@ -54,8 +54,8 @@ export const getCurrentUser = async () => {
   try {
     const response = await authApi.get("/user/current");
     return response.data;
-  } catch (error: any) {
+  } catch (error) {
     console.log(error);
-    return error.response.data;
+    throw error;
   }
 };
