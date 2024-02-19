@@ -8,6 +8,27 @@ export const authApi = axios.create({
   withCredentials: true,
 });
 
+authApi.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response) {
+      if (error.response.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+
+        console.log("Refreshing access token...");
+        await authApi.post("/user/refresh");
+        return authApi(originalRequest);
+      }
+
+      return Promise.reject(error);
+    }
+  }
+);
+
 export const signUpUser = async (user: INewUser): Promise<IApiResponse> => {
   try {
     const response = await authApi.post("/user/register", user);

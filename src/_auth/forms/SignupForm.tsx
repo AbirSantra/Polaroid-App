@@ -17,6 +17,7 @@ import googleLogo from "@/assets/google-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignInUser, useSignUpUser } from "@/lib/tanstack-query/queries";
 import { useUserContext } from "@/context/AuthContext";
+import { toast } from "sonner";
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -40,17 +41,23 @@ const SignupForm = () => {
 
   const onSubmit = async (user: z.infer<typeof SignUpValidation>) => {
     try {
-      const newUser = await signUpUser(user);
-      console.log(newUser);
+      const { data: newUser, succcess: newUserSuccess } =
+        await signUpUser(user);
+      if (newUserSuccess) {
+        toast("Successfully created account!");
+      }
+
       const signedInUser = await signInUser(user);
-      console.log(signedInUser);
+
       const isLoggedIn = await checkAuthUser();
       if (isLoggedIn) {
         form.reset();
+        toast("Login Successful");
         navigate("/");
       }
     } catch (error) {
       console.log("Error: ", error);
+      toast(error.response.data.message);
     }
   };
 

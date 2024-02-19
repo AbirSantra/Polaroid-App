@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { IUser } from "@/lib/types";
-import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "@/api/authApi";
+import { toast } from "sonner";
 
 export const INITIAL_USER = {
   _id: "",
@@ -33,7 +33,6 @@ interface IContext {
 const AuthContext = createContext<IContext>(INITIAL_STATE);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const navigate = useNavigate();
   const [user, setUser] = useState<IUser>(INITIAL_USER);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,6 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return false;
     } catch (error) {
       console.log(error);
+      toast(error.response.data.message);
       return false;
     } finally {
       setIsLoading(false);
@@ -67,9 +67,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     console.log("Running checkAuthUser");
     checkAuthUser();
-    if (!isAuthenticated) {
-      navigate("/sign-in");
-    }
   }, []);
 
   const value = {
