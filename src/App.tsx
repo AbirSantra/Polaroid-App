@@ -21,7 +21,7 @@ function App() {
           <Route index element={<Home />} />
         </Route>
       </Routes>
-      <Toaster position="top-center" />
+      <Toaster position="top-center" expand />
     </main>
   );
 }

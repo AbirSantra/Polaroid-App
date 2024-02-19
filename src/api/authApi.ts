@@ -1,4 +1,5 @@
-import { IApiResponse, INewUser, ISignInUser } from "@/lib/types";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { INewUser, ISignInUser } from "@/lib/types";
 import axios from "axios";
 
 const BASE_URL = "http://localhost:8000/api";
@@ -29,32 +30,32 @@ authApi.interceptors.response.use(
   }
 );
 
-export const signUpUser = async (user: INewUser): Promise<IApiResponse> => {
+export const signUpUser = async (user: INewUser) => {
   try {
     const response = await authApi.post("/user/register", user);
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
-    throw error;
+    return error.response.data;
   }
 };
 
-export const signInUser = async (user: ISignInUser): Promise<IApiResponse> => {
+export const signInUser = async (user: ISignInUser) => {
   try {
     const response = await authApi.post("/user/login", user);
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
-    throw error;
+    return error.response.data;
   }
 };
 
-export const getCurrentUser = async (): Promise<IApiResponse> => {
+export const getCurrentUser = async () => {
   try {
     const response = await authApi.get("/user/current");
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
-    throw error;
+    return error.response.data;
   }
 };

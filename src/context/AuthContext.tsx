@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { IUser } from "@/lib/types";
 import { getCurrentUser } from "@/api/authApi";
-import { toast } from "sonner";
 
 export const INITIAL_USER = {
   _id: "",
@@ -57,7 +56,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return false;
     } catch (error) {
       console.log(error);
-      toast(error.response.data.message);
       return false;
     } finally {
       setIsLoading(false);

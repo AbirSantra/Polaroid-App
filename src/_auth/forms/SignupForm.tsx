@@ -41,23 +41,30 @@ const SignupForm = () => {
 
   const onSubmit = async (user: z.infer<typeof SignUpValidation>) => {
     try {
-      const { data: newUser, succcess: newUserSuccess } =
-        await signUpUser(user);
-      if (newUserSuccess) {
-        toast("Successfully created account!");
+      const newUser = await signUpUser(user);
+      if (!newUser.success) {
+        toast(newUser.message);
+        return;
+      } else {
+        toast("Account created!");
       }
 
       const signedInUser = await signInUser(user);
+      if (!signedInUser.success) {
+        toast(
+          "Auto Sign in failed. Please sign in to your new account manually"
+        );
+        return;
+      }
 
       const isLoggedIn = await checkAuthUser();
       if (isLoggedIn) {
         form.reset();
-        toast("Login Successful");
+        toast("Sign In Successful");
         navigate("/");
       }
     } catch (error) {
       console.log("Error: ", error);
-      toast(error.response.data.message);
     }
   };
 

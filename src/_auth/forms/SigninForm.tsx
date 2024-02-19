@@ -14,9 +14,13 @@ import googleLogo from "@/assets/google-logo.png";
 import { Input } from "@/components/ui/input";
 import { KeyRound, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSignInUser } from "@/lib/tanstack-query/queries";
+import { toast } from "sonner";
+import { useUserContext } from "@/context/AuthContext";
 
 const SigninForm = () => {
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof SignInValidation>>({
     resolver: zodResolver(SignInValidation),
     defaultValues: {
@@ -25,8 +29,28 @@ const SigninForm = () => {
     },
   });
 
-  const onSubmit = () => {
-    console.log("Form submitted!");
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+
+  const { mutateAsync: signInUser, isPending: isSignInPending } =
+    useSignInUser();
+
+  const onSubmit = async (user: z.infer<typeof SignInValidation>) => {
+    try {
+      const signedInUser = await signInUser(user);
+      if (!signedInUser.success) {
+        toast(signedInUser.message);
+        return;
+      }
+
+      const isLoggedIn = await checkAuthUser();
+      if (isLoggedIn) {
+        form.reset();
+        toast("Sign In Successful");
+        navigate("/");
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+    }
   };
 
   return (
@@ -76,7 +100,7 @@ const SigninForm = () => {
           />
           <div className="w-full space-y-4 pt-4">
             <Button variant={"primary"} type="submit">
-              Sign In
+              {isUserLoading || isSignInPending ? "Loading" : "Sign In"}
             </Button>
             <Button variant={"outline"} className="text-gray-500">
               <img
