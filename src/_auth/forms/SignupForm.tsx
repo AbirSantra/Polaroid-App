@@ -14,10 +14,12 @@ import { Button } from "@/components/ui/button";
 import { AtSign, KeyRound, Mail, UserRound } from "lucide-react";
 import PolaroidLogo from "@/assets/polaroid-logo.png";
 import googleLogo from "@/assets/google-logo.png";
-import { Link } from "react-router-dom";
-import { useSignUpUser } from "@/lib/tanstack-query/queries";
+import { Link, useNavigate } from "react-router-dom";
+import { useSignInUser, useSignUpUser } from "@/lib/tanstack-query/queries";
+import { useUserContext } from "@/context/AuthContext";
 
 const SignupForm = () => {
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof SignUpValidation>>({
     resolver: zodResolver(SignUpValidation),
     defaultValues: {
@@ -28,17 +30,25 @@ const SignupForm = () => {
     },
   });
 
-  const {
-    mutateAsync: signUpUser,
-    isPending: isSignUpPending,
-    isError: isSignUpError,
-    isSuccess: isSignUpSuccess,
-  } = useSignUpUser();
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+
+  const { mutateAsync: signUpUser, isPending: isSignUpPending } =
+    useSignUpUser();
+
+  const { mutateAsync: signInUser, isPending: isSignInPending } =
+    useSignInUser();
 
   const onSubmit = async (user: z.infer<typeof SignUpValidation>) => {
     try {
       const newUser = await signUpUser(user);
       console.log(newUser);
+      const signedInUser = await signInUser(user);
+      console.log(signedInUser);
+      const isLoggedIn = await checkAuthUser();
+      if (isLoggedIn) {
+        form.reset();
+        navigate("/");
+      }
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -125,7 +135,9 @@ const SignupForm = () => {
           />
           <div className="w-full space-y-4 pt-4">
             <Button variant={"primary"} type="submit">
-              Sign Up
+              {isSignUpPending || isSignInPending || isUserLoading
+                ? "Signing you in..."
+                : "Sign Up"}
             </Button>
             <Button variant={"outline"} className="text-gray-500">
               <img

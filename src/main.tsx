@@ -3,11 +3,14 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
 import QueryProvider from "./lib/tanstack-query/QueryProvider.tsx";
+import { AuthProvider } from "./context/AuthContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <QueryProvider>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </QueryProvider>
   </BrowserRouter>
 );

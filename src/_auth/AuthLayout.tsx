@@ -1,9 +1,10 @@
 import { Outlet, Navigate } from "react-router-dom";
 
 import PolaroidLogo from "../assets/polaroid-logo.png";
+import { useUserContext } from "@/context/AuthContext";
 
 const AuthLayout = () => {
-  const isAuthenticated = false;
+  const { isAuthenticated } = useUserContext();
 
   return (
     <>

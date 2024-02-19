@@ -12,3 +12,17 @@ export interface INewUser {
   email: string;
   password: string;
 }
+
+export interface ISignInUser {
+  email: string;
+  password: string;
+}
+
+export interface IUser {
+  avatar: string;
+  email: string;
+  fullName: string;
+  username: string;
+  _id: string;
+  bio: string;
+}
