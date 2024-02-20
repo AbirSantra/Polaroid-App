@@ -34,7 +34,7 @@ const TopBar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-50 flex h-16 w-full items-center justify-between px-4 shadow-sm md:hidden">
+    <div className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b border-gray-200 px-4 md:hidden">
       <Logo />
       <DropdownMenu>
         <DropdownMenuTrigger className="ml-auto">
