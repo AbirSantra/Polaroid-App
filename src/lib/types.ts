@@ -1,9 +1,8 @@
-export interface IApiResponse {
-  success: boolean;
-  statusCode: number;
-  message: string;
-  data: any;
-  error: any;
+import { LucideIcon } from "lucide-react";
+export interface INavLinkItem {
+  icon: LucideIcon;
+  url: string;
+  label: string;
 }
 
 export interface INewUser {
