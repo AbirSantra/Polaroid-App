@@ -1,6 +1,6 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import Logo from "./logo";
-import { useUserContext } from "@/context/AuthContext";
+import { INITIAL_USER, useUserContext } from "@/context/AuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -12,11 +12,31 @@ import { LogOut, MoreVertical, Settings } from "lucide-react";
 import { navLinkItems } from "@/lib/contants";
 import { INavLinkItem } from "@/lib/types";
 import { Button } from "./ui/button";
+import { useSignOutUser } from "@/lib/tanstack-query/queries";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 const LeftSideBar = () => {
-  const { user } = useUserContext();
+  const { user, setUser, setIsAuthenticated } = useUserContext();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const avatarFallback = user.fullName.charAt(0).toUpperCase();
+  const { mutate: signOutUser } = useSignOutUser();
+
+  const handleLogout = async () => {
+    try {
+      signOutUser();
+      setIsAuthenticated(false);
+      setUser(INITIAL_USER);
+      navigate("/sign-in");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast("Signed Out Successfully!");
+      }
+      console.log("Error: ", error);
+    }
+  };
+
   return (
     <nav className="hidden min-w-[270px] flex-col gap-16 px-8 py-8 md:flex">
       {/* Logo */}
@@ -64,7 +84,10 @@ const LeftSideBar = () => {
             <DropdownMenuItem className="flex gap-2 p-3 text-sm font-medium text-gray-700">
               <Settings size={20} /> Edit Profile
             </DropdownMenuItem>
-            <DropdownMenuItem className="flex gap-2 p-3 text-sm font-medium text-gray-700">
+            <DropdownMenuItem
+              className="flex gap-2 p-3 text-sm font-medium text-gray-700"
+              onClick={handleLogout}
+            >
               <LogOut size={20} /> Logout
             </DropdownMenuItem>
           </DropdownMenuContent>

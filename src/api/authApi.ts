@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { INewUser, ISignInUser } from "@/lib/types";
 import axios from "axios";
 
@@ -43,6 +42,16 @@ export const signUpUser = async (user: INewUser) => {
 export const signInUser = async (user: ISignInUser) => {
   try {
     const response = await authApi.post("/user/login", user);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const signOutUser = async () => {
+  try {
+    const response = await authApi.post("/user/logout");
     return response.data;
   } catch (error) {
     console.log(error);
