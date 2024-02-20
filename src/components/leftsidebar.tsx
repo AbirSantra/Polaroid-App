@@ -80,7 +80,7 @@ const LeftSideBar = () => {
           <DropdownMenuTrigger className="ml-auto">
             <MoreVertical size={20} />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="mb-4 w-48" align="end">
+          <DropdownMenuContent className="mb-4 w-48 font-poppins" align="end">
             <DropdownMenuItem className="flex gap-2 p-3 text-sm font-medium text-gray-700">
               <Settings size={20} /> Edit Profile
             </DropdownMenuItem>
