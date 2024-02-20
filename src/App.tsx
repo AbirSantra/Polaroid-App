@@ -6,6 +6,9 @@ import Home from "./_root/pages/Home";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import { Toaster } from "./components/ui/sonner";
+import Explore from "./_root/pages/Explore";
+import Activity from "./_root/pages/Activity";
+import Profile from "./_root/pages/Profile";
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
         {/* PRIVATE */}
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/activity" element={<Activity />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>
       <Toaster position="top-center" expand />
