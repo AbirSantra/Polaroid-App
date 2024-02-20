@@ -1,18 +1,27 @@
-import React from "react";
 import { useUserContext } from "@/context/AuthContext";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import LeftSideBar from "@/components/leftsidebar";
+import RightSideBar from "@/components/rightsidebar";
+import TopBar from "@/components/topbar";
+import BottomBar from "@/components/bottombar";
 
 const RootLayout = () => {
-  const { user, isAuthenticated } = useUserContext();
+  const { isAuthenticated } = useUserContext();
   return (
     <>
       {!isAuthenticated ? (
         <Navigate to="/sign-in" />
       ) : (
-        <div>
-          <img src={user.avatar} alt="" />
-          <p>Name: {user.fullName}</p>
-          <p>Username: {user.username}</p>
+        <div className="mx-auto w-full max-w-[1300px] md:flex">
+          <TopBar />
+          <LeftSideBar />
+
+          <section className="flex h-full flex-1 border-l border-r">
+            <Outlet />
+          </section>
+
+          <RightSideBar />
+          <BottomBar />
         </div>
       )}
     </>
