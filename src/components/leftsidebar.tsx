@@ -42,9 +42,7 @@ const LeftSideBar = () => {
   return (
     <nav className="hidden min-w-[270px] flex-col gap-16 px-8 py-8 md:flex">
       {/* Logo */}
-      <Link to={"/"}>
-        <Logo />
-      </Link>
+      <Logo />
 
       {/* Navlinks */}
       <div className="flex flex-col gap-8">
@@ -54,6 +52,7 @@ const LeftSideBar = () => {
           return (
             <NavLink
               to={LinkItem.url}
+              key={LinkItem.label}
               className={`group flex gap-4 ${isActive && "font-semibold text-rose-500"}`}
             >
               <LinkItem.icon size={24} />
