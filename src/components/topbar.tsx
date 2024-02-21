@@ -12,12 +12,14 @@ import { LogOut, Settings } from "lucide-react";
 import { useSignOutUser } from "@/lib/tanstack-query/queries";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
+import { useModal } from "@/context/ModalContext";
 
 const TopBar = () => {
   const { user, setUser, setIsAuthenticated } = useUserContext();
   const navigate = useNavigate();
   const avatarFallback = user.fullName.charAt(0).toUpperCase();
   const { mutate: signOutUser } = useSignOutUser();
+  const { openModal } = useModal();
 
   const handleLogout = async () => {
     try {
@@ -44,7 +46,10 @@ const TopBar = () => {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="mb-4 w-36 font-poppins" align="end">
-          <DropdownMenuItem className="flex gap-2 p-3 text-xs font-medium text-gray-700">
+          <DropdownMenuItem
+            className="flex gap-2 p-3 text-xs font-medium text-gray-700"
+            onClick={() => openModal("EDIT-PROFILE")}
+          >
             <Settings size={16} /> Edit Profile
           </DropdownMenuItem>
           <DropdownMenuItem
