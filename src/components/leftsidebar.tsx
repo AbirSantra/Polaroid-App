@@ -15,6 +15,7 @@ import { Button } from "./ui/button";
 import { useSignOutUser } from "@/lib/tanstack-query/queries";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
+import { useModal } from "@/context/ModalContext";
 
 const LeftSideBar = () => {
   const { user, setUser, setIsAuthenticated } = useUserContext();
@@ -22,6 +23,7 @@ const LeftSideBar = () => {
   const navigate = useNavigate();
   const avatarFallback = user.fullName.charAt(0).toUpperCase();
   const { mutate: signOutUser } = useSignOutUser();
+  const { openModal } = useModal();
 
   const handleLogout = async () => {
     try {
@@ -62,7 +64,9 @@ const LeftSideBar = () => {
       </div>
 
       {/* New Post */}
-      <Button variant={"primary"}>New Post</Button>
+      <Button variant={"primary"} onClick={() => openModal("NEW-POST")}>
+        New Post
+      </Button>
 
       {/* Account */}
       <div className="mt-auto flex items-center justify-center gap-4">
@@ -81,7 +85,10 @@ const LeftSideBar = () => {
             <MoreVertical size={20} />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="mb-4 w-48 font-poppins" align="end">
-            <DropdownMenuItem className="flex gap-2 p-3 text-sm font-medium text-gray-700">
+            <DropdownMenuItem
+              className="flex gap-2 p-3 text-sm font-medium text-gray-700"
+              onClick={() => openModal("EDIT-PROFILE")}
+            >
               <Settings size={20} /> Edit Profile
             </DropdownMenuItem>
             <DropdownMenuItem
