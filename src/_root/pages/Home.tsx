@@ -16,12 +16,12 @@ const Home = () => {
   const { openModal } = useModal();
 
   return (
-    <div className="custom-scrollbar flex flex-1 flex-col gap-4 overflow-scroll p-8">
+    <div className="custom-scrollbar flex flex-1 flex-col overflow-scroll py-2 sm:gap-4 sm:p-4 md:p-8">
       {/* Feed Type Toggler */}
-      <div className="mb-4 flex w-full text-base text-gray-500">
+      <div className="mb-2 flex w-full text-base text-gray-500 sm:mb-4">
         <Button
           variant={"ghost"}
-          className={`flex flex-1 items-center justify-center gap-2 hover:bg-transparent hover:text-rose-500 ${feedType === "FOLLOWING" && "font-semibold text-rose-500"}`}
+          className={`flex flex-1 items-center justify-center gap-2 text-xs hover:bg-transparent hover:text-rose-500 sm:text-base ${feedType === "FOLLOWING" && "font-semibold text-rose-500"}`}
           onClick={() => setFeedType("FOLLOWING")}
         >
           <Heart size={18} />
@@ -29,7 +29,7 @@ const Home = () => {
         </Button>
         <Button
           variant={"ghost"}
-          className={`flex flex-1 items-center justify-center gap-2 hover:bg-transparent hover:text-rose-500 ${feedType === "TRENDING" && "font-semibold text-rose-500"}`}
+          className={`flex flex-1 items-center justify-center gap-2 text-xs hover:bg-transparent hover:text-rose-500 sm:text-base ${feedType === "TRENDING" && "font-semibold text-rose-500"}`}
           onClick={() => setFeedType("TRENDING")}
         >
           <Flame size={18} />

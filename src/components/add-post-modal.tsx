@@ -81,14 +81,14 @@ const AddPostModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="font-poppins sm:max-w-[425px]">
+      <DialogContent className="flex h-screen flex-col font-poppins sm:h-fit sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="">New Post</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <Textarea
             placeholder="What's new?"
-            className="h-fit resize-none border-none p-0"
+            className="h-fit resize-none border-none p-0 text-xs md:text-sm"
             ref={textAreaRef}
             value={sanitizedDescription}
             onChange={handleDescriptionChange}
@@ -104,18 +104,22 @@ const AddPostModal = () => {
           className="hidden"
         />
         {image && (
-          <div className="relative aspect-video w-full">
+          <div className="relative bg-gray-100">
             <span
               className="absolute -right-2 -top-2 flex cursor-pointer items-center justify-center rounded-full bg-rose-500 p-1 text-white"
               onClick={clearImage}
             >
               <X size={16} />
             </span>
-            <img src={imagePreview} alt="" className="w-full object-cover" />
+            <img
+              src={imagePreview}
+              alt=""
+              className="aspect-square w-full object-cover"
+            />
           </div>
         )}
 
-        <DialogFooter>
+        <DialogFooter className="mt-auto flex-row">
           <div
             className="mr-auto flex cursor-pointer items-center justify-center text-gray-400 hover:text-gray-500"
             onClick={() => imageRef.current?.click()}
