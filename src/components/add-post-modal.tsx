@@ -81,7 +81,7 @@ const AddPostModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="flex h-screen flex-col font-poppins sm:h-fit sm:max-w-[425px]">
+      <DialogContent className="flex h-screen flex-col font-poppins sm:h-fit sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle className="">New Post</DialogTitle>
         </DialogHeader>
