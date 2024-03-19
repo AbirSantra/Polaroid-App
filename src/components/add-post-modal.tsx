@@ -88,7 +88,7 @@ const AddPostModal = () => {
         <div className="flex flex-col gap-4">
           <Textarea
             placeholder="What's new?"
-            className="h-fit resize-none border-none p-0 text-xs md:text-sm"
+            className="h-fit resize-none border-none p-0 text-xs leading-10 md:text-sm"
             ref={textAreaRef}
             value={sanitizedDescription}
             onChange={handleDescriptionChange}
