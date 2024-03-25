@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, MoreVertical, Settings } from "lucide-react";
+import { LogOut, MoreVertical, PencilLine, Settings } from "lucide-react";
 import { navLinkItems } from "@/lib/contants";
 import { INavLinkItem } from "@/lib/types";
 import { Button } from "./ui/button";
@@ -40,12 +40,17 @@ const LeftSideBar = () => {
   };
 
   return (
-    <nav className="hidden min-w-[270px] flex-col gap-16 px-8 py-8 md:flex">
+    <nav className="hidden w-fit flex-col items-center gap-16 px-6 py-6 md:flex xl:min-w-[270px] xl:items-start xl:px-8 xl:py-8">
       {/* Logo */}
-      <Logo />
+      <div className="flex xl:hidden">
+        <Logo icon />
+      </div>
+      <div className="hidden xl:flex">
+        <Logo />
+      </div>
 
       {/* Navlinks */}
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-12">
         {navLinkItems.map((LinkItem: INavLinkItem) => {
           const isActive = pathname === LinkItem.url;
 
@@ -56,34 +61,50 @@ const LeftSideBar = () => {
               className={`group flex gap-4 ${isActive && "font-semibold text-rose-500"}`}
             >
               <LinkItem.icon size={24} />
-              <p>{LinkItem.label}</p>
+              <p className="hidden xl:flex">{LinkItem.label}</p>
             </NavLink>
           );
         })}
       </div>
 
       {/* New Post */}
-      <Button variant={"primary"} onClick={() => openModal("NEW-POST")}>
+      <Button
+        className="hidden xl:flex"
+        variant={"primary"}
+        onClick={() => openModal("NEW-POST")}
+      >
         New Post
+      </Button>
+      <Button
+        variant={"primary"}
+        size={"icon"}
+        className="rounded-full xl:hidden"
+        onClick={() => openModal("NEW-POST")}
+      >
+        <PencilLine size={24} />
       </Button>
 
       {/* Account */}
-      <div className="mt-auto flex items-center justify-center gap-4">
-        <Avatar className="h-12 w-12 border border-gray-300">
-          <AvatarImage src={user.avatar} />
-          <AvatarFallback>{avatarFallback}</AvatarFallback>
-        </Avatar>
-        <div className="flex flex-col">
-          <p className="text-base font-semibold text-rose-500">
-            {user.fullName}
-          </p>
-          <p className="text-sm text-gray-500">@{user.username}</p>
-        </div>
+
+      <div className="mt-auto">
         <DropdownMenu>
-          <DropdownMenuTrigger className="ml-auto">
-            <MoreVertical size={20} />
+          <DropdownMenuTrigger className=" flex w-full items-center gap-4">
+            <Avatar className="h-12 w-12 border border-gray-300">
+              <AvatarImage src={user.avatar} />
+              <AvatarFallback>{avatarFallback}</AvatarFallback>
+            </Avatar>
+            <div className="hidden flex-col xl:flex">
+              <p className="text-base font-semibold text-rose-500">
+                {user.fullName}
+              </p>
+              <p className="text-sm text-gray-500">@{user.username}</p>
+            </div>
+            <MoreVertical size={20} className="hidden xl:flex" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="mb-4 w-48 font-poppins" align="end">
+          <DropdownMenuContent
+            className="mb-4 ml-4 w-48 font-poppins"
+            align="end"
+          >
             <DropdownMenuItem
               className="flex gap-2 p-3 text-sm font-medium text-gray-700"
               onClick={() => openModal("EDIT-PROFILE")}
