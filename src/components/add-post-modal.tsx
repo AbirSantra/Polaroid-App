@@ -81,14 +81,14 @@ const AddPostModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="flex h-screen flex-col font-poppins sm:h-fit sm:max-w-[600px]">
+      <DialogContent className="flex h-screen flex-col font-poppins sm:max-w-[600px] md:h-fit">
         <DialogHeader>
           <DialogTitle className="">New Post</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <Textarea
             placeholder="What's new?"
-            className="h-fit resize-none border-none p-0 text-xs leading-10 md:text-sm"
+            className="h-fit resize-none border-none p-0 text-xs leading-5 md:text-sm md:leading-6"
             ref={textAreaRef}
             value={sanitizedDescription}
             onChange={handleDescriptionChange}
