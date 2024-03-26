@@ -1,4 +1,4 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import Logo from "./logo";
 import { INITIAL_USER, useUserContext } from "@/context/AuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -107,9 +107,11 @@ const LeftSideBar = () => {
           >
             <DropdownMenuItem
               className="flex gap-2 p-3 text-sm font-medium text-gray-700"
-              onClick={() => openModal("EDIT-PROFILE")}
+              asChild
             >
-              <Settings size={20} /> Edit Profile
+              <Link to={"/edit-profile"}>
+                <Settings size={20} /> Edit Profile
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem
               className="flex gap-2 p-3 text-sm font-medium text-gray-700"

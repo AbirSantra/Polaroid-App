@@ -9,6 +9,7 @@ import { Toaster } from "./components/ui/sonner";
 import Explore from "./_root/pages/Explore";
 import Activity from "./_root/pages/Activity";
 import Profile from "./_root/pages/Profile";
+import EditProfile from "./_root/pages/EditProfile";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/explore" element={<Explore />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
         </Route>
       </Routes>
       <Toaster position="top-center" expand />
