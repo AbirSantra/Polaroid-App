@@ -9,10 +9,12 @@ export interface InputProps
   onTogglePassword?: () => void;
   onSearch?: () => void;
   isSearch?: boolean;
+  label?: string;
+  description?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, isSearch, icon, ...props }, ref) => {
+  ({ className, type, isSearch, icon, label, description, ...props }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false);
 
     const toggleShowPassword = () => {
@@ -20,38 +22,42 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     };
 
     return (
-      <div
-        className={cn(
-          "flex w-full max-w-80 items-center justify-between gap-4 rounded border border-gray-300 p-3 text-sm text-gray-500 transition-all duration-200 ease-in focus-within:border-rose-500 focus-within:text-rose-500",
-          className
-        )}
-      >
-        {/* Search Button */}
-        {isSearch && (
-          <span className="cursor-pointer">
-            <Search size={18} />
-          </span>
-        )}
-        {/* Icon */}
-        {icon}
-        {/* Input */}
-        <input
-          type={showPassword ? "text" : type}
+      <div className="flex flex-col gap-2">
+        {label && <p className="text-sm font-medium">{label}</p>}
+        <div
           className={cn(
-            "w-full border-none bg-transparent text-sm font-medium text-gray-900 outline-none transition-all duration-200 ease-in placeholder:font-medium placeholder:text-gray-500 focus:outline-none"
+            "flex w-full items-center justify-between gap-4 rounded border border-gray-300 p-3 text-sm text-gray-500 transition-all duration-200 ease-in focus-within:border-rose-500 focus-within:text-rose-500",
+            className
           )}
-          ref={ref}
-          {...props}
-        />
-        {/* Show/Hide Password */}
-        {type === "password" && (
-          <span
-            onClick={toggleShowPassword}
-            className="cursor-pointer select-none"
-          >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-          </span>
-        )}
+        >
+          {/* Search Button */}
+          {isSearch && (
+            <span className="cursor-pointer">
+              <Search size={18} />
+            </span>
+          )}
+          {/* Icon */}
+          {icon}
+          {/* Input */}
+          <input
+            type={showPassword ? "text" : type}
+            className={cn(
+              "w-full border-none bg-transparent text-sm text-gray-900 outline-none transition-all duration-200 ease-in placeholder:font-medium placeholder:text-gray-500 focus:outline-none"
+            )}
+            ref={ref}
+            {...props}
+          />
+          {/* Show/Hide Password */}
+          {type === "password" && (
+            <span
+              onClick={toggleShowPassword}
+              className="cursor-pointer select-none"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </span>
+          )}
+        </div>
+        {description && <p className="text-xs text-gray-500">{description}</p>}
       </div>
     );
   }

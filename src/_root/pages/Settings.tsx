@@ -7,7 +7,7 @@ import React from "react";
 
 const Settings = () => {
   return (
-    <div className="custom-scrollbar flex flex-1 flex-col gap-8 overflow-scroll p-2 sm:p-4 md:gap-16 md:p-8">
+    <div className="custom-scrollbar flex flex-1 flex-col gap-8 overflow-scroll p-4 md:gap-8 md:p-8">
       <PageHeader title="Settings" />
       <div className="flex flex-col gap-8 md:gap-12">
         <EditProfile />
