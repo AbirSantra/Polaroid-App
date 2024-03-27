@@ -32,3 +32,15 @@ export const ProfileValidation = z.object({
     .max(120, { message: "Bio should not exceed 120 characters." })
     .optional(),
 });
+
+export const ChangePasswordValidation = z.object({
+  currentPassword: z
+    .string()
+    .min(8, { message: "Password must be atleast 8 characters." }),
+  newPassword: z
+    .string()
+    .min(8, { message: "Password must be atleast 8 characters." }),
+  confirmNewPassword: z
+    .string()
+    .min(8, { message: "Password must be atleast 8 characters." }),
+});

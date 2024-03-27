@@ -2,8 +2,6 @@ import ChangePassword from "@/components/change-password";
 import DeleteProfile from "@/components/delete-profile";
 import EditProfile from "@/components/edit-profile";
 import PageHeader from "@/components/page-header";
-import { useUserContext } from "@/context/AuthContext";
-import React from "react";
 
 const Settings = () => {
   return (
