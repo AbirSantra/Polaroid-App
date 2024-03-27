@@ -26,7 +26,7 @@ function App() {
           <Route path="/explore" element={<Explore />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/edit-profile" element={<Settings />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
       </Routes>
       <Toaster position="top-center" expand />

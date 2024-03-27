@@ -109,7 +109,7 @@ const LeftSideBar = () => {
               className="flex gap-2 p-3 text-sm font-medium text-gray-700"
               asChild
             >
-              <Link to={"/edit-profile"}>
+              <Link to={"/settings"}>
                 <Settings size={20} /> Edit Profile
               </Link>
             </DropdownMenuItem>
