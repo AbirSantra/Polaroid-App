@@ -12,7 +12,7 @@ const RootLayout = () => {
       {!isAuthenticated ? (
         <Navigate to="/sign-in" />
       ) : (
-        <div className="mx-auto w-full max-w-[1200px] md:flex">
+        <div className="mx-auto h-screen w-full max-w-[1200px] md:flex">
           <TopBar />
           <LeftSideBar />
 
