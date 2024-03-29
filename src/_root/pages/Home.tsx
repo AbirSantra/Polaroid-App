@@ -16,7 +16,7 @@ const Home = () => {
   const { openModal } = useModal();
 
   return (
-    <div className="custom-scrollbar flex flex-1 flex-col overflow-scroll py-2 sm:gap-3 sm:p-4 md:gap-4 md:p-8">
+    <div className="flex flex-1 flex-col py-2 sm:gap-3 sm:p-4 md:gap-4 md:p-8">
       {/* Feed Type Toggler */}
       <div className="mb-2 flex w-full text-base text-gray-500 md:mb-4">
         <Button

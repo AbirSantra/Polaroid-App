@@ -13,7 +13,7 @@ import Settings from "./_root/pages/Settings";
 
 function App() {
   return (
-    <main className="flex h-screen font-poppins text-gray-900">
+    <main className="font-poppins text-gray-900">
       <Routes>
         {/* PUBLIC */}
         <Route element={<AuthLayout />}>

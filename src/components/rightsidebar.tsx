@@ -1,7 +1,7 @@
 import React from "react";
 
 const RightSideBar = () => {
-  return <div className="hidden min-w-[270px] lg:flex">RightSideBar</div>;
+  return <div className="flex w-[270px]">RightSideBar</div>;
 };
 
 export default RightSideBar;

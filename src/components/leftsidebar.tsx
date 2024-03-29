@@ -40,7 +40,7 @@ const LeftSideBar = () => {
   };
 
   return (
-    <nav className="hidden w-fit flex-col items-center gap-16 px-6 py-6 md:flex xl:min-w-[270px] xl:items-start xl:px-8 xl:py-8">
+    <nav className="flex h-full w-20 flex-col items-center gap-16 px-6 py-6 xl:w-[270px] xl:items-start xl:px-8 xl:py-8">
       {/* Logo */}
       <div className="flex xl:hidden">
         <Logo icon />

@@ -7,7 +7,7 @@ const BottomBar = () => {
   const { openModal } = useModal();
 
   return (
-    <div className="sticky bottom-0 z-50 flex h-16 w-full items-center justify-between border-t bg-white px-8 text-gray-700 md:hidden">
+    <div className="flex h-16 w-full items-center justify-between border-t bg-white px-8 text-gray-700">
       <NavLink
         to={"/"}
         className={({ isActive }) =>

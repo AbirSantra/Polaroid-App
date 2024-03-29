@@ -5,7 +5,7 @@ import PageHeader from "@/components/page-header";
 
 const Settings = () => {
   return (
-    <div className="custom-scrollbar flex flex-1 flex-col gap-8 overflow-scroll p-4 md:gap-8 md:p-8">
+    <div className="flex flex-1 flex-col gap-8 p-4 md:gap-8 md:p-8">
       <PageHeader title="Settings" />
       <div className="flex flex-col gap-20">
         <EditProfile />
