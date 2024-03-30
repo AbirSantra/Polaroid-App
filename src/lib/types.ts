@@ -25,3 +25,11 @@ export interface IUser {
   _id: string;
   bio: string;
 }
+
+export interface IUpdateUser {
+  email: string;
+  username: string;
+  fullName: string;
+  bio: string;
+  file: File;
+}

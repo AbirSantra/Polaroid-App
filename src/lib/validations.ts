@@ -26,11 +26,10 @@ export const ProfileValidation = z.object({
   fullName: z
     .string()
     .min(2, { message: "Fullname must be atleast 2 characters." }),
-  file: z.custom<File[]>(),
+  file: z.custom<File>(),
   bio: z
     .string()
-    .max(120, { message: "Bio should not exceed 120 characters." })
-    .optional(),
+    .max(120, { message: "Bio should not exceed 120 characters." }),
 });
 
 export const ChangePasswordValidation = z.object({

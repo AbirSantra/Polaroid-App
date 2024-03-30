@@ -17,14 +17,17 @@ import { Button } from "./ui/button";
 import { useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Pencil } from "lucide-react";
+import { useUpdateUser } from "@/lib/tanstack-query/queries";
+import { toast } from "sonner";
+import { AxiosError } from "axios";
 
 const EditProfile = () => {
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
 
   const form = useForm<z.infer<typeof ProfileValidation>>({
     resolver: zodResolver(ProfileValidation),
     defaultValues: {
-      file: [],
+      file: undefined,
       fullName: user.fullName,
       username: user.username,
       email: user.email,
@@ -36,8 +39,38 @@ const EditProfile = () => {
   const [avatar, setAvatar] = useState<string>(user.avatar);
   const avatarRef = useRef<HTMLInputElement>(null);
 
+  const { mutateAsync: updateUser, isPending: isUserUpdateLoading } =
+    useUpdateUser();
+
   const onSubmit = async (value: z.infer<typeof ProfileValidation>) => {
-    console.log(value);
+    try {
+      console.log(value);
+      const updatedUser = await updateUser({
+        fullName: value.fullName,
+        username: value.username,
+        file: value.file,
+        bio: value.bio,
+        email: value.email,
+      });
+      console.log(updatedUser);
+      if (updatedUser.success) {
+        setUser({
+          ...user,
+          fullName: updatedUser?.data.fullName,
+          username: updatedUser?.data.username,
+          email: updatedUser?.data.email,
+          bio: updatedUser?.data.bio,
+          avatar: updatedUser?.data.avatar,
+        });
+        form.resetField("file");
+        toast("Profile updated!");
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast(error.response?.data.message);
+      }
+      console.log("Error: ", error);
+    }
   };
 
   return (
@@ -169,10 +202,10 @@ const EditProfile = () => {
             variant={"primary"}
             type="submit"
             className="w-fit text-xs"
-            // disabled={isLoadingUpdate}
+            disabled={isUserUpdateLoading}
           >
             {/* {isLoadingUpdate && <Loader />} */}
-            Update Profile
+            {isUserUpdateLoading ? "Saving..." : "Update User"}
           </Button>
         </form>
       </Form>
