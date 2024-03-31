@@ -6,6 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
+import { useChangePassword } from "@/lib/tanstack-query/queries";
 
 const ChangePassword = () => {
   const form = useForm<z.infer<typeof ChangePasswordValidation>>({
@@ -17,8 +20,31 @@ const ChangePassword = () => {
     },
   });
 
+  const { mutateAsync: updatePassword, isPending: isPasswordUpdating } =
+    useChangePassword();
+
   const onSubmit = async (value: z.infer<typeof ChangePasswordValidation>) => {
-    console.log(value);
+    try {
+      console.log(value);
+      if (value.newPassword !== value.confirmNewPassword) {
+        return toast("Passwords do not match!");
+      }
+
+      const passwordChangeResult = await updatePassword({
+        currentPassword: value.currentPassword,
+        newPassword: value.newPassword,
+      });
+
+      if (passwordChangeResult.success) {
+        form.reset();
+        toast("Password changed successfully!");
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast(error.response?.data.message);
+      }
+      console.log("Error: ", error);
+    }
   };
 
   return (
@@ -76,7 +102,7 @@ const ChangePassword = () => {
                 <FormControl>
                   <Input
                     placeholder="Confirm Password"
-                    type="text"
+                    type="password"
                     label="Confirm Password"
                     className="p-2"
                     {...field}
@@ -92,14 +118,12 @@ const ChangePassword = () => {
               variant={"primary"}
               type="submit"
               className="w-fit text-xs"
-              // disabled={isLoadingUpdate}
+              disabled={isPasswordUpdating}
             >
-              {/* {isLoadingUpdate && <Loader />} */}
-              Change Password
+              {isPasswordUpdating ? "Saving..." : "Change Password"}
             </Button>
             <Button
               variant={"ghost"}
-              type="submit"
               className="w-fit text-xs"
               // disabled={isLoadingUpdate}
             >

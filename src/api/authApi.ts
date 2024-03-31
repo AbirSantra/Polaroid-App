@@ -1,4 +1,9 @@
-import { INewUser, ISignInUser, IUpdateUser } from "@/lib/types";
+import {
+  IChangePassword,
+  INewUser,
+  ISignInUser,
+  IUpdateUser,
+} from "@/lib/types";
 import axios from "axios";
 
 const BASE_URL = "http://localhost:8000/api";
@@ -72,6 +77,16 @@ export const getCurrentUser = async () => {
 export const updateUser = async (user: IUpdateUser) => {
   try {
     const response = await authApi.patchForm("/user/update", user);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const changePassword = async (data: IChangePassword) => {
+  try {
+    const response = await authApi.patch("/user/password", data);
     return response.data;
   } catch (error) {
     console.log(error);

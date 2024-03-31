@@ -33,3 +33,8 @@ export interface IUpdateUser {
   bio: string;
   file: File;
 }
+
+export interface IChangePassword {
+  currentPassword: string;
+  newPassword: string;
+}
