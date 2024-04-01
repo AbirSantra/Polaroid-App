@@ -86,14 +86,14 @@ const LeftSideBar = () => {
 
       {/* Account */}
 
-      <div className="mt-auto">
+      <div className="mt-auto w-full">
         <DropdownMenu>
-          <DropdownMenuTrigger className=" flex w-full items-center gap-4">
+          <DropdownMenuTrigger className=" flex w-full items-center justify-between gap-4">
             <Avatar className="h-12 w-12 border border-gray-300">
               <AvatarImage src={user.avatar} />
               <AvatarFallback>{avatarFallback}</AvatarFallback>
             </Avatar>
-            <div className="hidden flex-col xl:flex">
+            <div className="hidden flex-col text-left xl:flex">
               <p className="text-base font-semibold text-rose-500">
                 {user.fullName}
               </p>
@@ -117,7 +117,7 @@ const LeftSideBar = () => {
               className="flex gap-2 p-3 text-sm font-medium text-gray-700"
               onClick={handleLogout}
             >
-              <LogOut size={20} /> Logout
+              <LogOut size={24} /> Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

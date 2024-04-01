@@ -189,7 +189,7 @@ const EditProfile = () => {
                     placeholder="Bio"
                     label="Bio"
                     description="Write something about yourself. Max 120 characters."
-                    className="resize-none p-2"
+                    className="resize-none border-gray-300 p-2"
                     {...field}
                   />
                 </FormControl>
