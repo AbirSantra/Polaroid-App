@@ -93,3 +93,13 @@ export const changePassword = async (data: IChangePassword) => {
     throw error;
   }
 };
+
+export const deleteProfile = async () => {
+  try {
+    const response = await authApi.delete("/user/delete");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

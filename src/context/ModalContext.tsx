@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 
-export type ModalType = "NEW-POST" | "EDIT-PROFILE";
+export type ModalType = "NEW-POST" | "EDIT-PROFILE" | "DELETE-PROFILE";
 
 interface ModalStore {
   type: ModalType | null;
