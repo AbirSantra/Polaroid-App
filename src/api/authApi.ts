@@ -1,5 +1,6 @@
 import {
   IChangePassword,
+  INewPost,
   INewUser,
   ISignInUser,
   IUpdateUser,
@@ -97,6 +98,16 @@ export const changePassword = async (data: IChangePassword) => {
 export const deleteProfile = async () => {
   try {
     const response = await authApi.delete("/user/delete");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const createPost = async (post: INewPost) => {
+  try {
+    const response = await authApi.postForm("/post/create", post);
     return response.data;
   } catch (error) {
     console.log(error);

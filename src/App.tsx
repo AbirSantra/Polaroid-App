@@ -29,7 +29,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
         </Route>
       </Routes>
-      <Toaster position="top-center" expand />
+      <Toaster expand />
     </main>
   );
 }

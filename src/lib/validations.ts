@@ -43,3 +43,8 @@ export const ChangePasswordValidation = z.object({
     .string()
     .min(8, { message: "Password must be atleast 8 characters." }),
 });
+
+export const PostValidation = z.object({
+  content: z.string().min(1, { message: "Post content cannot be empty." }),
+  file: z.custom<File>().optional(),
+});

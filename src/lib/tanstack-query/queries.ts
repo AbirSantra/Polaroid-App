@@ -1,7 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import { IChangePassword, INewUser, ISignInUser, IUpdateUser } from "../types";
+import {
+  IChangePassword,
+  INewPost,
+  INewUser,
+  ISignInUser,
+  IUpdateUser,
+} from "../types";
 import {
   changePassword,
+  createPost,
   deleteProfile,
   signInUser,
   signOutUser,
@@ -42,5 +49,11 @@ export const useChangePassword = () => {
 export const useDeleteProfile = () => {
   return useMutation({
     mutationFn: () => deleteProfile(),
+  });
+};
+
+export const useCreatePost = () => {
+  return useMutation({
+    mutationFn: (post: INewPost) => createPost(post),
   });
 };

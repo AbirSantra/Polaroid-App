@@ -38,3 +38,8 @@ export interface IChangePassword {
   currentPassword: string;
   newPassword: string;
 }
+
+export interface INewPost {
+  content: string;
+  file?: File;
+}
