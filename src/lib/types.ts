@@ -43,3 +43,12 @@ export interface INewPost {
   content: string;
   file?: File;
 }
+
+export interface IPost {
+  content: string;
+  _id: string;
+  user: IUser;
+  imageUrl: string;
+  imageId: string;
+  createdAt: string;
+}

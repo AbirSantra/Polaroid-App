@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   IChangePassword,
   INewPost,
@@ -10,6 +10,7 @@ import {
   changePassword,
   createPost,
   deleteProfile,
+  getAllPost,
   signInUser,
   signOutUser,
   signUpUser,
@@ -52,8 +53,21 @@ export const useDeleteProfile = () => {
   });
 };
 
+export const useGetAllPosts = () => {
+  return useQuery({
+    queryKey: ["ALL_POSTS"],
+    queryFn: () => getAllPost(),
+  });
+};
+
 export const useCreatePost = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (post: INewPost) => createPost(post),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["ALL_POSTS"],
+      });
+    },
   });
 };

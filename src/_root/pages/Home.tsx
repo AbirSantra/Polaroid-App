@@ -1,7 +1,10 @@
+import PostCard from "@/components/post-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import { useModal } from "@/context/ModalContext";
+import { useGetAllPosts } from "@/lib/tanstack-query/queries";
+import { IPost } from "@/lib/types";
 import { Flame, Heart } from "lucide-react";
 import { useState } from "react";
 
@@ -14,6 +17,14 @@ const Home = () => {
   const avatarFallback = user.fullName.charAt(0).toUpperCase();
 
   const { openModal } = useModal();
+
+  const {
+    data: posts,
+    isPending: isPostsLoading,
+    isError: isPostsError,
+  } = useGetAllPosts();
+
+  console.log(posts);
 
   return (
     <div className="flex flex-1 flex-col py-2 sm:gap-3 sm:p-4 md:gap-4 md:p-8">
@@ -55,7 +66,15 @@ const Home = () => {
       </div>
 
       {/* Feed */}
-      <div className="p min-h-[150vh] rounded-md border">Feed</div>
+      {isPostsLoading ? (
+        <p>Loading</p>
+      ) : (
+        <div className="flex flex-1 flex-col gap-4">
+          {posts.data.map((post: IPost) => (
+            <PostCard key={post._id} postData={post} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

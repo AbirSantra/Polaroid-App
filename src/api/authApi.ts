@@ -105,6 +105,16 @@ export const deleteProfile = async () => {
   }
 };
 
+export const getAllPost = async () => {
+  try {
+    const response = await authApi.get("/post/all");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const createPost = async (post: INewPost) => {
   try {
     const response = await authApi.postForm("/post/create", post);
