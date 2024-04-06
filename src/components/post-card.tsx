@@ -7,7 +7,7 @@ const PostCard = ({ postData }: { postData: IPost }) => {
   const createdAt = moment(postData.createdAt).fromNow();
 
   return (
-    <div className="flex w-full flex-col gap-4 rounded-sm border p-4">
+    <div className="flex w-full flex-col gap-4 border-t p-4 sm:rounded-sm sm:border">
       {/* User Header */}
       <div className="flex w-full items-center gap-4">
         <Avatar className="h-8 w-8 border border-gray-300">

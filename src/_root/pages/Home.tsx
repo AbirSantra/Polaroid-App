@@ -27,9 +27,9 @@ const Home = () => {
   console.log(posts);
 
   return (
-    <div className="flex flex-1 flex-col py-2 sm:gap-3 sm:p-4 md:gap-4 md:p-8">
+    <div className="flex h-full flex-1 flex-col py-4 sm:gap-3 sm:p-4 md:gap-4 md:p-8">
       {/* Feed Type Toggler */}
-      <div className="mb-2 flex w-full text-base text-gray-500 md:mb-4">
+      <div className="mb-4 flex w-full text-base text-gray-500 sm:mb-2 md:mb-4">
         <Button
           variant={"ghost"}
           className={`flex flex-1 items-center justify-center gap-2 py-1 text-xs hover:bg-transparent hover:text-rose-500 sm:text-base ${feedType === "FOLLOWING" && "font-semibold text-rose-500"}`}
@@ -69,7 +69,7 @@ const Home = () => {
       {isPostsLoading ? (
         <p>Loading</p>
       ) : (
-        <div className="flex flex-1 flex-col gap-4">
+        <div className="flex flex-1 flex-col sm:gap-4">
           {posts.data.map((post: IPost) => (
             <PostCard key={post._id} postData={post} />
           ))}

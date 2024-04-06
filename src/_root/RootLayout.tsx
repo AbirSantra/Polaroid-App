@@ -22,7 +22,7 @@ const RootLayout = () => {
         <Outlet />
       </section>
 
-      <div className="sticky inset-y-0 right-0 hidden h-screen border-l lg:flex">
+      <div className="sticky inset-y-0 right-0 hidden h-screen border-l min-[900px]:flex">
         <RightSideBar />
       </div>
 
