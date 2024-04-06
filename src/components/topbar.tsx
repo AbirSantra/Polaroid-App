@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogOut, Settings } from "lucide-react";
 import { useSignOutUser } from "@/lib/tanstack-query/queries";
 import { AxiosError } from "axios";
@@ -48,9 +48,11 @@ const TopBar = () => {
         <DropdownMenuContent className="mb-4 w-36 font-poppins" align="end">
           <DropdownMenuItem
             className="flex gap-2 p-3 text-xs font-medium text-gray-700"
-            onClick={() => openModal("EDIT-PROFILE")}
+            asChild
           >
-            <Settings size={16} /> Edit Profile
+            <Link to={"/settings"}>
+              <Settings size={20} /> Edit Profile
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
             className="flex gap-2 p-3 text-xs font-medium text-gray-700"
