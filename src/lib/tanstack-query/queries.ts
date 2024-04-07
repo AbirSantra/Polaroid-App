@@ -10,6 +10,7 @@ import {
 import {
   changePassword,
   createPost,
+  deletePost,
   deleteProfile,
   getAllPost,
   signInUser,
@@ -82,6 +83,16 @@ export const useUpdatePost = () => {
       queryClient.invalidateQueries({
         queryKey: ["ALL_POSTS"],
       });
+    },
+  });
+};
+
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (post: { _id: string | undefined }) => deletePost(post),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["ALL_POSTS"] });
     },
   });
 };

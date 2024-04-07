@@ -135,3 +135,13 @@ export const updatePost = async (post: IUpdatePost) => {
     throw error;
   }
 };
+
+export const deletePost = async (post: { _id: string | undefined }) => {
+  try {
+    const response = await authApi.post("/post/delete", post);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

@@ -58,6 +58,7 @@ const PostCard = ({ postData }: { postData: IPost }) => {
             <DropdownMenuItem
               className="flex gap-2 p-3 text-xs font-semibold text-gray-700"
               asChild
+              onClick={() => openModal("DELETE-POST", { post: postData })}
             >
               <span>
                 <Trash2Icon size={16} /> Delete Post

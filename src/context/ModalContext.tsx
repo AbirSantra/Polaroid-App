@@ -1,7 +1,11 @@
 import { IPost } from "@/lib/types";
 import React, { createContext, useContext, useState } from "react";
 
-export type ModalType = "NEW-POST" | "EDIT-POST" | "DELETE-PROFILE";
+export type ModalType =
+  | "NEW-POST"
+  | "EDIT-POST"
+  | "DELETE-POST"
+  | "DELETE-PROFILE";
 
 interface ModalData {
   post?: IPost;
