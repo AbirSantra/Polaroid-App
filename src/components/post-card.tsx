@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { useModal } from "@/context/ModalContext";
+import { Skeleton } from "./ui/skeleton";
 
 const PostCard = ({ postData }: { postData: IPost }) => {
   const createdAt = moment(postData.createdAt).fromNow();
@@ -101,3 +102,29 @@ const PostCard = ({ postData }: { postData: IPost }) => {
 };
 
 export default PostCard;
+
+export const PostCardSkeleton = () => {
+  return (
+    <div className="flex w-full flex-col gap-4 border-t border-gray-100 p-4 sm:rounded-sm sm:border">
+      {/* User Header */}
+      <div className="flex w-full items-center gap-4">
+        <Skeleton className="h-8 w-8 rounded-full"></Skeleton>
+        <Skeleton className="h-[14px] w-32 text-sm"></Skeleton>
+        <Skeleton className="ml-auto h-[10px] w-20"></Skeleton>
+      </div>
+
+      {/* Content */}
+      <Skeleton className="h-[14px] w-48 text-sm"></Skeleton>
+
+      {/* Image */}
+      <Skeleton className="w- flex aspect-video items-center justify-center overflow-hidden rounded-md"></Skeleton>
+
+      {/* Buttons */}
+      <div className="flex w-full items-center gap-4">
+        <Skeleton className="flex h-[20px] w-32 items-center justify-center gap-2"></Skeleton>
+        <Skeleton className="ml-auto flex h-[20px] w-5 items-center justify-center gap-2"></Skeleton>
+      </div>
+      {/* Comment Box */}
+    </div>
+  );
+};

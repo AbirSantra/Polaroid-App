@@ -18,7 +18,7 @@ const RootLayout = () => {
         <LeftSideBar />
       </div>
 
-      <section className="h-full flex-1">
+      <section className="min-h-screen flex-1">
         <Outlet />
       </section>
 

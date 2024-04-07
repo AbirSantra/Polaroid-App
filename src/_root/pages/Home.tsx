@@ -1,4 +1,4 @@
-import PostCard from "@/components/post-card";
+import PostCard, { PostCardSkeleton } from "@/components/post-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
@@ -18,11 +18,7 @@ const Home = () => {
 
   const { openModal } = useModal();
 
-  const {
-    data: posts,
-    isPending: isPostsLoading,
-    isError: isPostsError,
-  } = useGetAllPosts();
+  const { data: posts, isPending: isPostsLoading } = useGetAllPosts();
 
   return (
     <div className="flex h-full flex-1 flex-col py-4 sm:gap-3 sm:p-4 md:gap-4 md:p-8">
@@ -64,10 +60,14 @@ const Home = () => {
       </div>
 
       {/* Feed */}
-      {isPostsLoading ? (
-        <p>Loading</p>
+      {isPostsLoading || !posts.data.length ? (
+        <div className="flex h-full flex-1 flex-col sm:gap-4">
+          <PostCardSkeleton />
+          <PostCardSkeleton />
+          <PostCardSkeleton />
+        </div>
       ) : (
-        <div className="flex flex-1 flex-col sm:gap-4">
+        <div className="flex h-full flex-1 flex-col sm:gap-4">
           {posts.data.map((post: IPost) => (
             <PostCard key={post._id} postData={post} />
           ))}
