@@ -24,8 +24,6 @@ const Home = () => {
     isError: isPostsError,
   } = useGetAllPosts();
 
-  console.log(posts);
-
   return (
     <div className="flex h-full flex-1 flex-col py-4 sm:gap-3 sm:p-4 md:gap-4 md:p-8">
       {/* Feed Type Toggler */}

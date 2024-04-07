@@ -106,7 +106,7 @@ const LeftSideBar = () => {
             align="end"
           >
             <DropdownMenuItem
-              className="flex gap-2 p-3 text-sm font-medium text-gray-700"
+              className="flex gap-2 p-3 text-xs font-semibold text-gray-700"
               asChild
             >
               <Link to={"/settings"}>
@@ -114,10 +114,10 @@ const LeftSideBar = () => {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="flex gap-2 p-3 text-sm font-medium text-gray-700"
+              className="flex gap-2 p-3 text-xs font-semibold text-gray-700"
               onClick={handleLogout}
             >
-              <LogOut size={24} /> Logout
+              <LogOut size={20} /> Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

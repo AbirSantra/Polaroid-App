@@ -4,6 +4,7 @@ import {
   INewPost,
   INewUser,
   ISignInUser,
+  IUpdatePost,
   IUpdateUser,
 } from "../types";
 import {
@@ -14,6 +15,7 @@ import {
   signInUser,
   signOutUser,
   signUpUser,
+  updatePost,
   updateUser,
 } from "@/api/authApi";
 
@@ -64,6 +66,18 @@ export const useCreatePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (post: INewPost) => createPost(post),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["ALL_POSTS"],
+      });
+    },
+  });
+};
+
+export const useUpdatePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (post: IUpdatePost) => updatePost(post),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["ALL_POSTS"],

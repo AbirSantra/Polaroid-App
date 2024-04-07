@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AddPostModal from "./add-post-modal";
-import EditProfileModal from "./edit-profile-modal";
+import EditPostModal from "./edit-post-modal";
 import DeleteProfileModal from "./delete-profile-modal";
 
 export const Modals = () => {
@@ -8,7 +8,7 @@ export const Modals = () => {
 
   useEffect(() => {
     setMounted(true);
-  });
+  }, []);
 
   if (!mounted) {
     return null;
@@ -17,7 +17,7 @@ export const Modals = () => {
   return (
     <>
       <AddPostModal />
-      <EditProfileModal />
+      <EditPostModal />
       <DeleteProfileModal />
     </>
   );

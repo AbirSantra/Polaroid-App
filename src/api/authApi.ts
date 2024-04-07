@@ -3,6 +3,7 @@ import {
   INewPost,
   INewUser,
   ISignInUser,
+  IUpdatePost,
   IUpdateUser,
 } from "@/lib/types";
 import axios from "axios";
@@ -118,6 +119,16 @@ export const getAllPost = async () => {
 export const createPost = async (post: INewPost) => {
   try {
     const response = await authApi.postForm("/post/create", post);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const updatePost = async (post: IUpdatePost) => {
+  try {
+    const response = await authApi.patchForm("/post/update", post);
     return response.data;
   } catch (error) {
     console.log(error);

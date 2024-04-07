@@ -52,3 +52,9 @@ export interface IPost {
   imageId: string;
   createdAt: string;
 }
+
+export interface IUpdatePost {
+  _id: string | undefined;
+  content: string;
+  file?: File;
+}

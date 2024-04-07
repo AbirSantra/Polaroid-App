@@ -1,10 +1,26 @@
 import { IPost } from "@/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import moment from "moment";
-import { BookmarkIcon, HeartIcon, MessageCircleIcon } from "lucide-react";
+import {
+  BookmarkIcon,
+  HeartIcon,
+  MessageCircleIcon,
+  MoreVerticalIcon,
+  PencilIcon,
+  Trash2Icon,
+} from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { useModal } from "@/context/ModalContext";
 
 const PostCard = ({ postData }: { postData: IPost }) => {
   const createdAt = moment(postData.createdAt).fromNow();
+
+  const { openModal } = useModal();
 
   return (
     <div className="flex w-full flex-col gap-4 border-t p-4 sm:rounded-sm sm:border">
@@ -22,9 +38,38 @@ const PostCard = ({ postData }: { postData: IPost }) => {
         <p className="ml-auto text-[10px] font-semibold text-gray-500">
           {createdAt}
         </p>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <MoreVerticalIcon size={18} />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end"
+            className="mb-4 mt-4 w-48 font-poppins"
+          >
+            <DropdownMenuItem
+              className="flex cursor-pointer gap-2 p-3 text-xs font-semibold text-gray-700"
+              asChild
+              onClick={() => openModal("EDIT-POST", { post: postData })}
+            >
+              <span>
+                <PencilIcon size={16} /> Edit Post
+              </span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="flex gap-2 p-3 text-xs font-semibold text-gray-700"
+              asChild
+            >
+              <span>
+                <Trash2Icon size={16} /> Delete Post
+              </span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       {/* Content */}
-      <p className="text-sm text-gray-800">{postData.content}</p>
+      <p className="whitespace-pre-wrap text-sm text-gray-800">
+        {postData.content}
+      </p>
       {/* Image */}
       {postData.imageUrl ? (
         <div className="flex w-full items-center justify-center overflow-hidden rounded-md border border-gray-300">

@@ -1,21 +1,27 @@
+import { IPost } from "@/lib/types";
 import React, { createContext, useContext, useState } from "react";
 
-export type ModalType = "NEW-POST" | "EDIT-PROFILE" | "DELETE-PROFILE";
+export type ModalType = "NEW-POST" | "EDIT-POST" | "DELETE-PROFILE";
 
+interface ModalData {
+  post?: IPost;
+}
 interface ModalStore {
   type: ModalType | null;
   isOpen: boolean;
+  data: ModalData | undefined;
 }
 
 interface ModalContextProps {
   modalState: ModalStore;
-  openModal: (type: ModalType) => void;
+  openModal: (type: ModalType, data?: ModalData) => void;
   closeModal: () => void;
 }
 
 const initialModalState: ModalStore = {
   type: null,
   isOpen: false,
+  data: {},
 };
 
 const ModalContext = createContext<ModalContextProps>({
@@ -28,10 +34,13 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [modalState, setModalState] = useState<ModalStore>({
     type: null,
     isOpen: false,
+    data: {},
   });
 
-  const openModal = (type: ModalType) => setModalState({ isOpen: true, type });
-  const closeModal = () => setModalState({ type: null, isOpen: false });
+  const openModal = (type: ModalType, data?: ModalData) =>
+    setModalState({ isOpen: true, type, data });
+  const closeModal = () =>
+    setModalState({ type: null, isOpen: false, data: {} });
 
   const value = {
     modalState,
