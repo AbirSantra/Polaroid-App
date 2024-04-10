@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import { useModal } from "@/context/ModalContext";
-import { useGetAllPosts } from "@/lib/tanstack-query/queries";
+import { useGetTrendingPosts } from "@/lib/tanstack-query/queries";
 import { IPost } from "@/lib/types";
 import { Flame, Heart } from "lucide-react";
 import { useState } from "react";
@@ -18,7 +18,7 @@ const Home = () => {
 
   const { openModal } = useModal();
 
-  const { data: posts, isPending: isPostsLoading } = useGetAllPosts();
+  const { data: posts, isPending: isPostsLoading } = useGetTrendingPosts();
 
   return (
     <div className="flex h-full flex-1 flex-col py-4 sm:gap-3 sm:p-4 md:gap-4 md:p-8">

@@ -13,6 +13,7 @@ import {
   deletePost,
   deleteProfile,
   getAllPost,
+  getTrendingPosts,
   signInUser,
   signOutUser,
   signUpUser,
@@ -60,6 +61,13 @@ export const useGetAllPosts = () => {
   return useQuery({
     queryKey: ["ALL_POSTS"],
     queryFn: () => getAllPost(),
+  });
+};
+
+export const useGetTrendingPosts = () => {
+  return useQuery({
+    queryKey: ["TRENDING_POSTS"],
+    queryFn: () => getTrendingPosts(),
   });
 };
 

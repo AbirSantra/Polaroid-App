@@ -116,6 +116,16 @@ export const getAllPost = async () => {
   }
 };
 
+export const getTrendingPosts = async () => {
+  try {
+    const response = await authApi.get("/post/trending");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const createPost = async (post: INewPost) => {
   try {
     const response = await authApi.postForm("/post/create", post);

@@ -24,7 +24,7 @@ const PostCard = ({ postData }: { postData: IPost }) => {
   const { openModal } = useModal();
 
   return (
-    <div className="flex w-full flex-col gap-4 border-t p-4 sm:rounded-sm sm:border">
+    <div className="flex w-full flex-col gap-4 border-t p-4 sm:rounded-md sm:border">
       {/* User Header */}
       <div className="flex w-full items-center gap-4">
         <Avatar className="h-8 w-8 border border-gray-300">
@@ -86,7 +86,7 @@ const PostCard = ({ postData }: { postData: IPost }) => {
       <div className="flex w-full items-center gap-4 text-gray-500">
         <span className="flex items-center justify-center gap-2">
           <HeartIcon size={20} />
-          <p className="text-sm font-medium">69</p>
+          <p className="text-sm font-medium">{postData.likesCount}</p>
         </span>
         <span className="flex items-center justify-center gap-2">
           <MessageCircleIcon size={20} />

@@ -51,6 +51,8 @@ export interface IPost {
   imageUrl: string;
   imageId: string;
   createdAt: string;
+  likesCount: number;
+  commentsCount: number;
 }
 
 export interface IUpdatePost {
