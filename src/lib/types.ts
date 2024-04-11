@@ -53,10 +53,19 @@ export interface IPost {
   createdAt: string;
   likesCount: number;
   commentsCount: number;
+  likes: ILike[];
 }
 
 export interface IUpdatePost {
   _id: string | undefined;
   content: string;
   file?: File;
+}
+
+export interface ILike {
+  _id: string;
+  user: string;
+  post: string;
+  createdAt: string;
+  updatedAt: string;
 }

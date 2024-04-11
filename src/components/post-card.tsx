@@ -17,11 +17,51 @@ import {
 } from "./ui/dropdown-menu";
 import { useModal } from "@/context/ModalContext";
 import { Skeleton } from "./ui/skeleton";
+import { useState } from "react";
+import { checkLikedStatus } from "@/lib/utils";
+import { useUserContext } from "@/context/AuthContext";
+import { useLikePost } from "@/lib/tanstack-query/queries";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 const PostCard = ({ postData }: { postData: IPost }) => {
+  const { user } = useUserContext();
   const createdAt = moment(postData.createdAt).fromNow();
 
   const { openModal } = useModal();
+
+  const [likesCount, setLikesCount] = useState<number>(postData.likesCount);
+
+  const [isLiked, setIsLiked] = useState<boolean>(
+    checkLikedStatus({ post: postData, userId: user._id })
+  );
+
+  const { mutateAsync: likePost } = useLikePost();
+
+  const handleLikePost = async () => {
+    try {
+      if (isLiked) {
+        setLikesCount((prev) => prev - 1);
+        setIsLiked((prev) => !prev);
+        const likeResult = await likePost(postData._id);
+        if (likeResult.success) {
+          toast("Post unliked!");
+        }
+      } else {
+        setLikesCount((prev) => prev + 1);
+        setIsLiked((prev) => !prev);
+        const likeResult = await likePost(postData._id);
+        if (likeResult.success) {
+          toast("Post liked!");
+        }
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+      if (error instanceof AxiosError) {
+        toast(error.response?.data.message);
+      }
+    }
+  };
 
   return (
     <div className="flex w-full flex-col gap-4 border-t p-4 sm:rounded-md sm:border">
@@ -74,19 +114,22 @@ const PostCard = ({ postData }: { postData: IPost }) => {
       </p>
       {/* Image */}
       {postData.imageUrl ? (
-        <div className="flex w-full items-center justify-center overflow-hidden rounded-md border border-gray-300">
+        <div className="flex aspect-video w-full items-center justify-center overflow-hidden rounded-md border border-gray-300">
           <img
             src={postData.imageUrl}
             alt={postData.imageId}
-            className="w-full"
+            className="w-full object-cover"
           />
         </div>
       ) : null}
       {/* Buttons */}
-      <div className="flex w-full items-center gap-4 text-gray-500">
-        <span className="flex items-center justify-center gap-2">
+      <div className="flex w-full items-center gap-8 text-gray-500">
+        <span
+          className={`flex cursor-pointer items-center justify-center gap-2 ${isLiked && "text-rose-500"}`}
+          onClick={handleLikePost}
+        >
           <HeartIcon size={20} />
-          <p className="text-sm font-medium">{postData.likesCount}</p>
+          <p className="text-sm font-medium">{likesCount}</p>
         </span>
         <span className="flex items-center justify-center gap-2">
           <MessageCircleIcon size={20} />

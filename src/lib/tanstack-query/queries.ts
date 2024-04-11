@@ -14,6 +14,7 @@ import {
   deleteProfile,
   getAllPost,
   getTrendingPosts,
+  likePost,
   signInUser,
   signOutUser,
   signUpUser,
@@ -102,5 +103,11 @@ export const useDeletePost = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["ALL_POSTS"] });
     },
+  });
+};
+
+export const useLikePost = () => {
+  return useMutation({
+    mutationFn: (postId: string) => likePost(postId),
   });
 };

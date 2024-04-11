@@ -155,3 +155,13 @@ export const deletePost = async (post: { _id: string | undefined }) => {
     throw error;
   }
 };
+
+export const likePost = async (postId: string) => {
+  try {
+    const response = await authApi.post("/post/like", { postId: postId });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
