@@ -54,6 +54,7 @@ export interface IPost {
   likesCount: number;
   commentsCount: number;
   likes: ILike[];
+  comments: IComment[];
 }
 
 export interface IUpdatePost {
@@ -68,4 +69,13 @@ export interface ILike {
   post: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IComment {
+  _id: string;
+  user: string;
+  post: string;
+  createdAt: string;
+  updatedAt: string;
+  content: string;
 }

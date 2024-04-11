@@ -9,6 +9,7 @@ import {
 } from "../types";
 import {
   changePassword,
+  commentPost,
   createPost,
   deletePost,
   deleteProfile,
@@ -109,5 +110,12 @@ export const useDeletePost = () => {
 export const useLikePost = () => {
   return useMutation({
     mutationFn: (postId: string) => likePost(postId),
+  });
+};
+
+export const useCommentPost = () => {
+  return useMutation({
+    mutationFn: (comment: { postId: string; content: string }) =>
+      commentPost(comment),
   });
 };

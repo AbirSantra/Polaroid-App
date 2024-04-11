@@ -7,6 +7,7 @@ import {
   MessageCircleIcon,
   MoreVerticalIcon,
   PencilIcon,
+  SendHorizontalIcon,
   Trash2Icon,
 } from "lucide-react";
 import {
@@ -20,9 +21,11 @@ import { Skeleton } from "./ui/skeleton";
 import { useState } from "react";
 import { checkLikedStatus } from "@/lib/utils";
 import { useUserContext } from "@/context/AuthContext";
-import { useLikePost } from "@/lib/tanstack-query/queries";
+import { useCommentPost, useLikePost } from "@/lib/tanstack-query/queries";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 const PostCard = ({ postData }: { postData: IPost }) => {
   const { user } = useUserContext();
@@ -54,6 +57,39 @@ const PostCard = ({ postData }: { postData: IPost }) => {
         if (likeResult.success) {
           toast("Post liked!");
         }
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+      if (error instanceof AxiosError) {
+        toast(error.response?.data.message);
+      }
+    }
+  };
+
+  const [isCommentActive, setIsCommentActive] = useState<boolean>(false);
+
+  const [commentsCount, setCommentsCount] = useState<number>(
+    postData.commentsCount
+  );
+
+  const [comment, setComment] = useState<string>("");
+
+  const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setComment(e.target.value);
+  };
+
+  const { mutateAsync: commentPost } = useCommentPost();
+
+  const handleCommentPost = async () => {
+    try {
+      const commentResult = await commentPost({
+        postId: postData._id,
+        content: comment,
+      });
+      if (commentResult.success) {
+        setCommentsCount((prev) => prev + 1);
+        setIsCommentActive((prev) => !prev);
+        toast("Added comment!");
       }
     } catch (error) {
       console.log("Error: ", error);
@@ -131,15 +167,42 @@ const PostCard = ({ postData }: { postData: IPost }) => {
           <HeartIcon size={20} />
           <p className="text-sm font-medium">{likesCount}</p>
         </span>
-        <span className="flex items-center justify-center gap-2">
+        <span
+          className="flex cursor-pointer items-center justify-center gap-2"
+          onClick={() => setIsCommentActive((prev) => !prev)}
+        >
           <MessageCircleIcon size={20} />
-          <p className="text-sm font-medium">69</p>
+          <p className="text-sm font-medium">{commentsCount}</p>
         </span>
         <span className="ml-auto flex items-center justify-center gap-2">
           <BookmarkIcon size={20} />
         </span>
       </div>
       {/* Comment Box */}
+      {isCommentActive && (
+        <div className="flex w-full items-center gap-4">
+          <Avatar className="h-8 w-8 border border-gray-300">
+            <AvatarImage src={user.avatar} />
+            <AvatarFallback>
+              {user.fullName.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <Input
+            type="text"
+            placeholder="Add a comment"
+            value={comment}
+            onChange={handleCommentChange}
+            className=" rounded-md border-gray-100 p-2 font-normal"
+          />
+          <Button
+            variant={"ghost"}
+            className="p-2 pl-0"
+            onClick={handleCommentPost}
+          >
+            <SendHorizontalIcon size={16} className="text-gray-500" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

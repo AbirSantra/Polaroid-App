@@ -165,3 +165,16 @@ export const likePost = async (postId: string) => {
     throw error;
   }
 };
+
+export const commentPost = async (comment: {
+  postId: string;
+  content: string;
+}) => {
+  try {
+    const response = await authApi.post("/post/comment", comment);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
