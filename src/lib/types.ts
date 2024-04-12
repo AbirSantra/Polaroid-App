@@ -74,7 +74,7 @@ export interface ILike {
 
 export interface IComment {
   _id: string;
-  user: string;
+  user: IUser;
   post: string;
   createdAt: string;
   updatedAt: string;

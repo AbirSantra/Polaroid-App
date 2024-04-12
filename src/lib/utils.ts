@@ -13,7 +13,7 @@ export const checkLikedStatus = ({
   post: IPost;
   userId: string;
 }) => {
-  return post.likes.some((like) => like.user === userId);
+  return post?.likes.some((like) => like.user === userId);
 };
 
 export const checkSavedStatus = ({
@@ -23,5 +23,5 @@ export const checkSavedStatus = ({
   post: IPost;
   userId: string;
 }) => {
-  return post.saves.some((save) => save.user === userId);
+  return post?.saves.some((save) => save.user === userId);
 };

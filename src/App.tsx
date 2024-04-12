@@ -10,6 +10,7 @@ import Explore from "./_root/pages/Explore";
 import Activity from "./_root/pages/Activity";
 import Profile from "./_root/pages/Profile";
 import Settings from "./_root/pages/Settings";
+import Post from "./_root/pages/Post";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/activity" element={<Activity />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/post/:id" element={<Post />} />
         </Route>
       </Routes>
       <Toaster expand />

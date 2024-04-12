@@ -14,6 +14,8 @@ import {
   deletePost,
   deleteProfile,
   getAllPost,
+  getPost,
+  getPostComments,
   getTrendingPosts,
   likePost,
   savePost,
@@ -74,6 +76,14 @@ export const useGetTrendingPosts = () => {
   });
 };
 
+export const useGetPost = (postId?: string) => {
+  return useQuery({
+    queryKey: ["GET_POST", postId],
+    queryFn: () => getPost(postId),
+    enabled: !!postId,
+  });
+};
+
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -123,8 +133,22 @@ export const useSavePost = () => {
 };
 
 export const useCommentPost = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (comment: { postId: string; content: string }) =>
       commentPost(comment),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["GET_COMMENTS"],
+      });
+    },
+  });
+};
+
+export const useGetPostComments = (postId?: string) => {
+  return useQuery({
+    queryKey: ["GET_COMMENTS", postId],
+    queryFn: () => getPostComments(postId),
+    enabled: !!postId,
   });
 };

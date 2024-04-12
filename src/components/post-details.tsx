@@ -1,6 +1,13 @@
+import { useUserContext } from "@/context/AuthContext";
+import { useModal } from "@/context/ModalContext";
+import {
+  useCommentPost,
+  useLikePost,
+  useSavePost,
+} from "@/lib/tanstack-query/queries";
 import { IPost } from "@/lib/types";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import moment from "moment";
+import { checkLikedStatus, checkSavedStatus } from "@/lib/utils";
+import { AxiosError } from "axios";
 import {
   BookmarkIcon,
   HeartIcon,
@@ -10,37 +17,30 @@ import {
   SendHorizontalIcon,
   Trash2Icon,
 } from "lucide-react";
+import moment from "moment";
+import React, { useState } from "react";
+import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { useModal } from "@/context/ModalContext";
-import { Skeleton } from "./ui/skeleton";
-import { useState } from "react";
-import { checkLikedStatus, checkSavedStatus } from "@/lib/utils";
-import { useUserContext } from "@/context/AuthContext";
-import {
-  useCommentPost,
-  useLikePost,
-  useSavePost,
-} from "@/lib/tanstack-query/queries";
-import { AxiosError } from "axios";
-import { toast } from "sonner";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Link } from "react-router-dom";
+import { Skeleton } from "./ui/skeleton";
 
-const PostCard = ({ postData }: { postData: IPost }) => {
+const PostDetails = ({ postData }: { postData: IPost }) => {
   const { user } = useUserContext();
-  const createdAt = moment(postData.createdAt).fromNow();
+
+  const createdAt = moment(postData?.createdAt).fromNow();
 
   const { openModal } = useModal();
 
-  const isPostOwner = user._id === postData.user._id;
+  const isPostOwner = user._id === postData?.user._id;
 
-  const [likesCount, setLikesCount] = useState<number>(postData.likesCount);
+  const [likesCount, setLikesCount] = useState<number>(postData?.likesCount);
 
   const [isLiked, setIsLiked] = useState<boolean>(
     checkLikedStatus({ post: postData, userId: user._id })
@@ -53,14 +53,14 @@ const PostCard = ({ postData }: { postData: IPost }) => {
       if (isLiked) {
         setLikesCount((prev) => prev - 1);
         setIsLiked((prev) => !prev);
-        const likeResult = await likePost(postData._id);
+        const likeResult = await likePost(postData?._id);
         if (likeResult.success) {
           toast("Post unliked!");
         }
       } else {
         setLikesCount((prev) => prev + 1);
         setIsLiked((prev) => !prev);
-        const likeResult = await likePost(postData._id);
+        const likeResult = await likePost(postData?._id);
         if (likeResult.success) {
           toast("Post liked!");
         }
@@ -73,10 +73,8 @@ const PostCard = ({ postData }: { postData: IPost }) => {
     }
   };
 
-  const [isCommentActive, setIsCommentActive] = useState<boolean>(false);
-
   const [commentsCount, setCommentsCount] = useState<number>(
-    postData.commentsCount
+    postData?.commentsCount
   );
 
   const [comment, setComment] = useState<string>("");
@@ -90,12 +88,12 @@ const PostCard = ({ postData }: { postData: IPost }) => {
   const handleCommentPost = async () => {
     try {
       const commentResult = await commentPost({
-        postId: postData._id,
+        postId: postData?._id,
         content: comment,
       });
       if (commentResult.success) {
         setCommentsCount((prev) => prev + 1);
-        setIsCommentActive((prev) => !prev);
+        setComment("");
         toast("Added comment!");
       }
     } catch (error) {
@@ -116,13 +114,13 @@ const PostCard = ({ postData }: { postData: IPost }) => {
     try {
       if (isSaved) {
         setIsSaved((prev) => !prev);
-        const saveResult = await savePost(postData._id);
+        const saveResult = await savePost(postData?._id);
         if (saveResult.success) {
           toast("Post removed from your saves!");
         }
       } else {
         setIsSaved((prev) => !prev);
-        const saveResult = await savePost(postData._id);
+        const saveResult = await savePost(postData?._id);
         if (saveResult.success) {
           toast("Added post to your saves!");
         }
@@ -136,10 +134,10 @@ const PostCard = ({ postData }: { postData: IPost }) => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-4 border-t p-4 sm:rounded-md sm:border">
+    <div className="flex w-full flex-col gap-4">
       {/* User Header */}
       <div className="flex w-full items-center gap-4">
-        <Avatar className="h-8 w-8 border border-gray-300">
+        <Avatar className="h-12 w-12 border border-gray-300">
           <AvatarImage src={postData.user.avatar} />
           <AvatarFallback>
             {postData.user.fullName.charAt(0).toUpperCase()}
@@ -183,22 +181,18 @@ const PostCard = ({ postData }: { postData: IPost }) => {
         )}
       </div>
       {/* Content */}
-      <Link to={`/post/${postData._id}`}>
-        <p className="whitespace-pre-wrap text-sm text-gray-800">
-          {postData.content}
-        </p>
-      </Link>
+      <p className="whitespace-pre-wrap text-sm text-gray-800">
+        {postData.content}
+      </p>
       {/* Image */}
       {postData.imageUrl ? (
-        <Link to={`/post/${postData._id}`}>
-          <div className="flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-md border border-gray-300">
-            <img
-              src={postData.imageUrl}
-              alt={postData.imageId}
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </Link>
+        <div className="flex w-full items-center justify-center overflow-hidden rounded-md border border-gray-300">
+          <img
+            src={postData.imageUrl}
+            alt={postData.imageId}
+            className="w-full"
+          />
+        </div>
       ) : null}
       {/* Buttons */}
       <div className="flex w-full items-center gap-8 text-gray-500">
@@ -213,10 +207,7 @@ const PostCard = ({ postData }: { postData: IPost }) => {
           )}
           <p className="text-sm font-medium">{likesCount}</p>
         </span>
-        <span
-          className="flex cursor-pointer items-center justify-center gap-2"
-          onClick={() => setIsCommentActive((prev) => !prev)}
-        >
+        <span className="flex cursor-pointer items-center justify-center gap-2">
           <MessageCircleIcon size={20} />
           <p className="text-sm font-medium">{commentsCount}</p>
         </span>
@@ -232,38 +223,36 @@ const PostCard = ({ postData }: { postData: IPost }) => {
         </span>
       </div>
       {/* Comment Box */}
-      {isCommentActive && (
-        <div className="flex w-full items-center gap-4">
-          <Avatar className="h-8 w-8 border border-gray-300">
-            <AvatarImage src={user.avatar} />
-            <AvatarFallback>
-              {user.fullName.charAt(0).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-          <Input
-            type="text"
-            placeholder="Add a comment"
-            value={comment}
-            onChange={handleCommentChange}
-            className="rounded-md border-gray-100 p-2 font-normal"
-          />
-          <Button variant={"ghost"} className="p-0" onClick={handleCommentPost}>
-            <SendHorizontalIcon size={16} className="text-gray-500" />
-          </Button>
-        </div>
-      )}
+      <div className="mt-2 flex w-full items-center gap-4">
+        <Avatar className="h-8 w-8 border border-gray-300">
+          <AvatarImage src={user.avatar} />
+          <AvatarFallback>
+            {user.fullName.charAt(0).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+        <Input
+          type="text"
+          placeholder="Add a comment"
+          value={comment}
+          onChange={handleCommentChange}
+          className="rounded-md border-gray-100 p-2 font-normal"
+        />
+        <Button variant={"ghost"} className="p-0" onClick={handleCommentPost}>
+          <SendHorizontalIcon size={16} className="text-gray-500" />
+        </Button>
+      </div>
     </div>
   );
 };
 
-export default PostCard;
+export default PostDetails;
 
-export const PostCardSkeleton = () => {
+export const PostDetailsSkeleton = () => {
   return (
-    <div className="flex w-full flex-col gap-4 border-t border-gray-100 p-4 sm:rounded-sm sm:border">
+    <div className="flex w-full flex-col gap-4">
       {/* User Header */}
       <div className="flex w-full items-center gap-4">
-        <Skeleton className="h-8 w-8 rounded-full"></Skeleton>
+        <Skeleton className="h-12 w-12 rounded-full"></Skeleton>
         <Skeleton className="h-[14px] w-32 text-sm"></Skeleton>
         <Skeleton className="ml-auto h-[10px] w-20"></Skeleton>
       </div>
@@ -279,7 +268,6 @@ export const PostCardSkeleton = () => {
         <Skeleton className="flex h-[20px] w-32 items-center justify-center gap-2"></Skeleton>
         <Skeleton className="ml-auto flex h-[20px] w-5 items-center justify-center gap-2"></Skeleton>
       </div>
-      {/* Comment Box */}
     </div>
   );
 };

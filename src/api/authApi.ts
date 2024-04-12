@@ -126,6 +126,16 @@ export const getTrendingPosts = async () => {
   }
 };
 
+export const getPost = async (postId?: string) => {
+  try {
+    const response = await authApi.post("/post/", { postId: postId });
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const createPost = async (post: INewPost) => {
   try {
     const response = await authApi.postForm("/post/create", post);
@@ -182,6 +192,16 @@ export const commentPost = async (comment: {
 export const savePost = async (postId: string) => {
   try {
     const response = await authApi.post("/post/save", { postId: postId });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getPostComments = async (postId?: string) => {
+  try {
+    const response = await authApi.post("/post/comments", { postId: postId });
     return response.data;
   } catch (error) {
     console.log(error);
