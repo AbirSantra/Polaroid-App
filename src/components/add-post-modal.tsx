@@ -114,7 +114,7 @@ const AddPostModal = () => {
                   <FormControl>
                     <Textarea
                       placeholder={`What's new @${user.username}`}
-                      className="h-fit resize-none border-none p-0 text-xs leading-5 md:text-sm md:leading-6"
+                      className="h-fit resize-none border-none p-0 text-sm leading-5 md:leading-6"
                       {...field}
                       ref={textAreaRef}
                     />
