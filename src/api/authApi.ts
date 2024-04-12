@@ -178,3 +178,13 @@ export const commentPost = async (comment: {
     throw error;
   }
 };
+
+export const savePost = async (postId: string) => {
+  try {
+    const response = await authApi.post("/post/save", { postId: postId });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

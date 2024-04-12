@@ -10,7 +10,7 @@ import { useState } from "react";
 
 const Home = () => {
   const [feedType, setFeedType] = useState<"FOLLOWING" | "TRENDING">(
-    "FOLLOWING"
+    "TRENDING"
   );
 
   const { user } = useUserContext();

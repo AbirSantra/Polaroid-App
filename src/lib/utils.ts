@@ -15,3 +15,13 @@ export const checkLikedStatus = ({
 }) => {
   return post.likes.some((like) => like.user === userId);
 };
+
+export const checkSavedStatus = ({
+  post,
+  userId,
+}: {
+  post: IPost;
+  userId: string;
+}) => {
+  return post.saves.some((save) => save.user === userId);
+};

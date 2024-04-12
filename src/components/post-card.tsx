@@ -19,9 +19,13 @@ import {
 import { useModal } from "@/context/ModalContext";
 import { Skeleton } from "./ui/skeleton";
 import { useState } from "react";
-import { checkLikedStatus } from "@/lib/utils";
+import { checkLikedStatus, checkSavedStatus } from "@/lib/utils";
 import { useUserContext } from "@/context/AuthContext";
-import { useCommentPost, useLikePost } from "@/lib/tanstack-query/queries";
+import {
+  useCommentPost,
+  useLikePost,
+  useSavePost,
+} from "@/lib/tanstack-query/queries";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { Input } from "./ui/input";
@@ -101,6 +105,35 @@ const PostCard = ({ postData }: { postData: IPost }) => {
     }
   };
 
+  const [isSaved, setIsSaved] = useState<boolean>(
+    checkSavedStatus({ post: postData, userId: user._id })
+  );
+
+  const { mutateAsync: savePost } = useSavePost();
+
+  const handleSavePost = async () => {
+    try {
+      if (isSaved) {
+        setIsSaved((prev) => !prev);
+        const saveResult = await savePost(postData._id);
+        if (saveResult.success) {
+          toast("Post removed from your saves!");
+        }
+      } else {
+        setIsSaved((prev) => !prev);
+        const saveResult = await savePost(postData._id);
+        if (saveResult.success) {
+          toast("Added post to your saves!");
+        }
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+      if (error instanceof AxiosError) {
+        toast(error.response?.data.message);
+      }
+    }
+  };
+
   return (
     <div className="flex w-full flex-col gap-4 border-t p-4 sm:rounded-md sm:border">
       {/* User Header */}
@@ -165,10 +198,14 @@ const PostCard = ({ postData }: { postData: IPost }) => {
       {/* Buttons */}
       <div className="flex w-full items-center gap-8 text-gray-500">
         <span
-          className={`flex cursor-pointer items-center justify-center gap-2 ${isLiked && "text-rose-500"}`}
+          className={`flex cursor-pointer items-center justify-center gap-2 ${isLiked && "text-rose-500"} duration-200 ease-in hover:text-rose-500`}
           onClick={handleLikePost}
         >
-          <HeartIcon size={20} />
+          {isLiked ? (
+            <HeartIcon size={20} fill="#f43f5e" />
+          ) : (
+            <HeartIcon size={20} />
+          )}
           <p className="text-sm font-medium">{likesCount}</p>
         </span>
         <span
@@ -178,8 +215,15 @@ const PostCard = ({ postData }: { postData: IPost }) => {
           <MessageCircleIcon size={20} />
           <p className="text-sm font-medium">{commentsCount}</p>
         </span>
-        <span className="ml-auto flex items-center justify-center gap-2">
-          <BookmarkIcon size={20} />
+        <span
+          className={`ml-auto flex cursor-pointer items-center justify-center gap-2 ${isSaved && "text-rose-500"} duration-200 ease-in hover:text-rose-500`}
+          onClick={handleSavePost}
+        >
+          {isSaved ? (
+            <BookmarkIcon size={20} fill="#f43f5e" />
+          ) : (
+            <BookmarkIcon size={20} />
+          )}
         </span>
       </div>
       {/* Comment Box */}

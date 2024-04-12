@@ -16,6 +16,7 @@ import {
   getAllPost,
   getTrendingPosts,
   likePost,
+  savePost,
   signInUser,
   signOutUser,
   signUpUser,
@@ -112,6 +113,12 @@ export const useDeletePost = () => {
 export const useLikePost = () => {
   return useMutation({
     mutationFn: (postId: string) => likePost(postId),
+  });
+};
+
+export const useSavePost = () => {
+  return useMutation({
+    mutationFn: (postId: string) => savePost(postId),
   });
 };
 
