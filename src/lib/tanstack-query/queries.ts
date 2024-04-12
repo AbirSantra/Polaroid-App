@@ -79,7 +79,7 @@ export const useCreatePost = () => {
     mutationFn: (post: INewPost) => createPost(post),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["ALL_POSTS"],
+        queryKey: ["TRENDING_POSTS"],
       });
     },
   });
@@ -91,7 +91,7 @@ export const useUpdatePost = () => {
     mutationFn: (post: IUpdatePost) => updatePost(post),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["ALL_POSTS"],
+        queryKey: ["TRENDING_POSTS"],
       });
     },
   });
@@ -102,7 +102,9 @@ export const useDeletePost = () => {
   return useMutation({
     mutationFn: (post: { _id: string | undefined }) => deletePost(post),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["ALL_POSTS"] });
+      queryClient.invalidateQueries({
+        queryKey: ["TRENDING_POSTS"],
+      });
     },
   });
 };

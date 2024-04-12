@@ -159,7 +159,7 @@ const AddPostModal = () => {
                 <img
                   src={imagePreview}
                   alt=""
-                  className="aspect-auto w-full object-cover"
+                  className="flex aspect-[4/3] w-full items-center justify-center object-cover"
                 />
               </div>
             )}

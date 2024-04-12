@@ -33,6 +33,8 @@ const PostCard = ({ postData }: { postData: IPost }) => {
 
   const { openModal } = useModal();
 
+  const isPostOwner = user._id === postData.user._id;
+
   const [likesCount, setLikesCount] = useState<number>(postData.likesCount);
 
   const [isLiked, setIsLiked] = useState<boolean>(
@@ -115,34 +117,36 @@ const PostCard = ({ postData }: { postData: IPost }) => {
         <p className="ml-auto text-[10px] font-semibold text-gray-500">
           {createdAt}
         </p>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <MoreVerticalIcon size={18} />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="end"
-            className="mb-4 mt-4 w-48 font-poppins"
-          >
-            <DropdownMenuItem
-              className="flex cursor-pointer gap-2 p-3 text-xs font-semibold text-gray-700"
-              asChild
-              onClick={() => openModal("EDIT-POST", { post: postData })}
+        {isPostOwner && (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <MoreVerticalIcon size={18} />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="mb-4 mt-4 w-48 font-poppins"
             >
-              <span>
-                <PencilIcon size={16} /> Edit Post
-              </span>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="flex gap-2 p-3 text-xs font-semibold text-gray-700"
-              asChild
-              onClick={() => openModal("DELETE-POST", { post: postData })}
-            >
-              <span>
-                <Trash2Icon size={16} /> Delete Post
-              </span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              <DropdownMenuItem
+                className="flex cursor-pointer gap-2 p-3 text-xs font-semibold text-gray-700"
+                asChild
+                onClick={() => openModal("EDIT-POST", { post: postData })}
+              >
+                <span>
+                  <PencilIcon size={16} /> Edit Post
+                </span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex gap-2 p-3 text-xs font-semibold text-gray-700"
+                asChild
+                onClick={() => openModal("DELETE-POST", { post: postData })}
+              >
+                <span>
+                  <Trash2Icon size={16} /> Delete Post
+                </span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </div>
       {/* Content */}
       <p className="whitespace-pre-wrap text-sm text-gray-800">
@@ -150,11 +154,11 @@ const PostCard = ({ postData }: { postData: IPost }) => {
       </p>
       {/* Image */}
       {postData.imageUrl ? (
-        <div className="flex aspect-video w-full items-center justify-center overflow-hidden rounded-md border border-gray-300">
+        <div className="flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-md border border-gray-300">
           <img
             src={postData.imageUrl}
             alt={postData.imageId}
-            className="w-full object-cover"
+            className="h-full w-full object-cover"
           />
         </div>
       ) : null}
@@ -192,13 +196,9 @@ const PostCard = ({ postData }: { postData: IPost }) => {
             placeholder="Add a comment"
             value={comment}
             onChange={handleCommentChange}
-            className=" rounded-md border-gray-100 p-2 font-normal"
+            className="rounded-md border-gray-100 p-2 font-normal"
           />
-          <Button
-            variant={"ghost"}
-            className="p-2 pl-0"
-            onClick={handleCommentPost}
-          >
+          <Button variant={"ghost"} className="p-0" onClick={handleCommentPost}>
             <SendHorizontalIcon size={16} className="text-gray-500" />
           </Button>
         </div>
