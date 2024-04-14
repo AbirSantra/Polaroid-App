@@ -208,3 +208,33 @@ export const getPostComments = async (postId?: string) => {
     throw error;
   }
 };
+
+export const getUserProfile = async (userId?: string) => {
+  try {
+    const response = await authApi.post("/user/profile", { userId: userId });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getUserPosts = async (userId?: string) => {
+  try {
+    const response = await authApi.post("/post/posts", { userId: userId });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getUserSaves = async (userId?: string) => {
+  try {
+    const response = await authApi.post("/post/saves", { userId: userId });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

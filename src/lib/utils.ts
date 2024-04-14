@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { IPost } from "./types";
+import { IPost, IProfile } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -24,4 +24,14 @@ export const checkSavedStatus = ({
   userId: string;
 }) => {
   return post?.saves.some((save) => save.user === userId);
+};
+
+export const checkFollowStatus = ({
+  profile,
+  userId,
+}: {
+  profile: IProfile;
+  userId: string;
+}) => {
+  return profile.followers.some((follow) => follow.user === userId);
 };

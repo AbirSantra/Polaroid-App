@@ -17,6 +17,9 @@ import {
   getPost,
   getPostComments,
   getTrendingPosts,
+  getUserPosts,
+  getUserProfile,
+  getUserSaves,
   likePost,
   savePost,
   signInUser,
@@ -59,6 +62,14 @@ export const useChangePassword = () => {
 export const useDeleteProfile = () => {
   return useMutation({
     mutationFn: () => deleteProfile(),
+  });
+};
+
+export const useGetUserProfile = (postId?: string) => {
+  return useQuery({
+    queryKey: ["GET_PROFILE", postId],
+    queryFn: () => getUserProfile(postId),
+    enabled: !!postId,
   });
 };
 
@@ -127,8 +138,14 @@ export const useLikePost = () => {
 };
 
 export const useSavePost = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (postId: string) => savePost(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["GET_SAVES"],
+      });
+    },
   });
 };
 
@@ -150,5 +167,21 @@ export const useGetPostComments = (postId?: string) => {
     queryKey: ["GET_COMMENTS", postId],
     queryFn: () => getPostComments(postId),
     enabled: !!postId,
+  });
+};
+
+export const useGetUserPosts = (userId?: string) => {
+  return useQuery({
+    queryKey: ["GET_POSTS", userId],
+    queryFn: () => getUserPosts(userId),
+    enabled: !!userId,
+  });
+};
+
+export const useGetUserSaves = (userId?: string) => {
+  return useQuery({
+    queryKey: ["GET_SAVES", userId],
+    queryFn: () => getUserSaves(userId),
+    enabled: !!userId,
   });
 };

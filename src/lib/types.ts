@@ -88,3 +88,22 @@ export interface ISave {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IProfile {
+  _id: string;
+  username: string;
+  fullName: string;
+  email: string;
+  avatar: string;
+  bio: string;
+  followersCount: number;
+  followingsCount: number;
+  followers: IFollow[];
+  followings: IFollow[];
+}
+
+export interface IFollow {
+  _id: string;
+  user: string;
+  following: string;
+}

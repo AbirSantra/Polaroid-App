@@ -56,7 +56,11 @@ const LeftSideBar = () => {
 
           return (
             <NavLink
-              to={LinkItem.url}
+              to={
+                LinkItem.label === "Profile"
+                  ? `/profile/${user._id}`
+                  : LinkItem.url
+              }
               key={LinkItem.label}
               className={`group flex gap-4 ${isActive && "font-semibold text-rose-500"}`}
             >

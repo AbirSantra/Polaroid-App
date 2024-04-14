@@ -139,15 +139,19 @@ const PostCard = ({ postData }: { postData: IPost }) => {
     <div className="flex w-full flex-col gap-4 border-t p-4 sm:rounded-md sm:border">
       {/* User Header */}
       <div className="flex w-full items-center gap-4">
-        <Avatar className="h-8 w-8 border border-gray-300">
-          <AvatarImage src={postData.user.avatar} />
-          <AvatarFallback>
-            {postData.user.fullName.charAt(0).toUpperCase()}
-          </AvatarFallback>
-        </Avatar>
-        <p className="text-sm font-semibold text-gray-900">
-          {postData.user.username}
-        </p>
+        <Link to={`/profile/${postData.user._id}`}>
+          <Avatar className="h-8 w-8 border border-gray-300">
+            <AvatarImage src={postData.user.avatar} />
+            <AvatarFallback>
+              {postData.user.fullName.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+        </Link>
+        <Link to={`/profile/${postData.user._id}`}>
+          <p className="text-sm font-semibold text-gray-900">
+            {postData.user.username}
+          </p>
+        </Link>
         <p className="ml-auto text-[10px] font-semibold text-gray-500">
           {createdAt}
         </p>

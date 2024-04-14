@@ -26,7 +26,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/activity" element={<Activity />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:id" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/post/:id" element={<Post />} />
         </Route>
