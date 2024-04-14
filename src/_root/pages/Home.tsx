@@ -3,7 +3,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import { useModal } from "@/context/ModalContext";
-import { useGetTrendingPosts } from "@/lib/tanstack-query/queries";
+import {
+  useGetFollowingPosts,
+  useGetTrendingPosts,
+} from "@/lib/tanstack-query/queries";
 import { IPost } from "@/lib/types";
 import { Flame, Heart } from "lucide-react";
 import { useState } from "react";
@@ -18,7 +21,11 @@ const Home = () => {
 
   const { openModal } = useModal();
 
-  const { data: posts, isPending: isPostsLoading } = useGetTrendingPosts();
+  const { data: trendingPosts, isPending: isTrendingPostsLoading } =
+    useGetTrendingPosts();
+
+  const { data: followingPosts, isPending: isFollowingPostsLoading } =
+    useGetFollowingPosts();
 
   return (
     <div className="flex h-full flex-1 flex-col py-4 sm:gap-3 sm:p-4 md:gap-4 md:p-8">
@@ -60,7 +67,34 @@ const Home = () => {
       </div>
 
       {/* Feed */}
-      {isPostsLoading || !posts.data.length ? (
+      {feedType === "TRENDING" && (
+        <TrendingFeed
+          posts={trendingPosts?.data}
+          isPostsLoading={isTrendingPostsLoading}
+        />
+      )}
+      {feedType === "FOLLOWING" && (
+        <FollowingFeed
+          posts={followingPosts?.data}
+          isPostsLoading={isFollowingPostsLoading}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Home;
+
+export const TrendingFeed = ({
+  posts,
+  isPostsLoading,
+}: {
+  posts: IPost[];
+  isPostsLoading: boolean;
+}) => {
+  return (
+    <div>
+      {isPostsLoading || !posts.length ? (
         <div className="flex h-full flex-1 flex-col sm:gap-4">
           <PostCardSkeleton />
           <PostCardSkeleton />
@@ -68,7 +102,7 @@ const Home = () => {
         </div>
       ) : (
         <div className="flex h-full flex-1 flex-col sm:gap-4">
-          {posts.data.map((post: IPost) => (
+          {posts.map((post: IPost) => (
             <PostCard key={post._id} postData={post} />
           ))}
         </div>
@@ -77,4 +111,28 @@ const Home = () => {
   );
 };
 
-export default Home;
+export const FollowingFeed = ({
+  posts,
+  isPostsLoading,
+}: {
+  posts: IPost[];
+  isPostsLoading: boolean;
+}) => {
+  return (
+    <div>
+      {isPostsLoading || !posts.length ? (
+        <div className="flex h-full flex-1 flex-col sm:gap-4">
+          <PostCardSkeleton />
+          <PostCardSkeleton />
+          <PostCardSkeleton />
+        </div>
+      ) : (
+        <div className="flex h-full flex-1 flex-col sm:gap-4">
+          {posts.map((post: IPost) => (
+            <PostCard key={post._id} postData={post} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};

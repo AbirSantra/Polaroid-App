@@ -118,7 +118,19 @@ export const getAllPost = async () => {
 
 export const getTrendingPosts = async () => {
   try {
+    console.log("Fetching Trending Posts!");
     const response = await authApi.get("/post/trending");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getFollowingPosts = async () => {
+  try {
+    console.log("Fetching Following Posts!");
+    const response = await authApi.get("/post/following");
     return response.data;
   } catch (error) {
     console.log(error);

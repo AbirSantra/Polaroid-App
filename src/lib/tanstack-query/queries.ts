@@ -15,6 +15,7 @@ import {
   deleteProfile,
   followUser,
   getAllPost,
+  getFollowingPosts,
   getPost,
   getPostComments,
   getTrendingPosts,
@@ -85,6 +86,13 @@ export const useGetTrendingPosts = () => {
   return useQuery({
     queryKey: ["TRENDING_POSTS"],
     queryFn: () => getTrendingPosts(),
+  });
+};
+
+export const useGetFollowingPosts = () => {
+  return useQuery({
+    queryKey: ["FOLLOWING_POSTS"],
+    queryFn: () => getFollowingPosts(),
   });
 };
 
@@ -188,7 +196,13 @@ export const useGetUserSaves = (userId?: string) => {
 };
 
 export const useFollowUser = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (userId: string) => followUser(userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["FOLLOWING_POSTS"],
+      });
+    },
   });
 };
