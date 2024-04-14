@@ -3,14 +3,17 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import {
+  useFollowUser,
   useGetUserPosts,
   useGetUserProfile,
   useGetUserSaves,
 } from "@/lib/tanstack-query/queries";
 import { IPost, IProfile, IUser } from "@/lib/types";
 import { checkFollowStatus } from "@/lib/utils";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const Profile = () => {
   const { id } = useParams();
@@ -41,6 +44,28 @@ export const ProfileInfo = ({
   const [isFollowing, setIsFollowing] = useState<boolean>(
     checkFollowStatus({ profile: profileData, userId: currentUser._id })
   );
+
+  const { mutateAsync: followUser, isPending: isFollowingUser } =
+    useFollowUser();
+
+  const handleFollowUser = async () => {
+    try {
+      const followResult = await followUser(profileData._id);
+      if (followResult.success) {
+        if (isFollowing) {
+          toast(`You unfollowed ${profileData.username}`);
+        } else {
+          toast(`You are now following ${profileData.username}`);
+        }
+        setIsFollowing((prev) => !prev);
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+      if (error instanceof AxiosError) {
+        toast(error.response?.data.message);
+      }
+    }
+  };
 
   const [feedType, setFeedType] = useState<"POSTS" | "SAVES">("POSTS");
 
@@ -80,9 +105,13 @@ export const ProfileInfo = ({
       {!isCurrentUser && (
         <div>
           {isFollowing ? (
-            <Button variant={"outline"}>Unfollow</Button>
+            <Button variant={"outline"} onClick={handleFollowUser}>
+              Unfollow
+            </Button>
           ) : (
-            <Button variant={"primary"}>Follow</Button>
+            <Button variant={"primary"} onClick={handleFollowUser}>
+              Follow
+            </Button>
           )}
         </div>
       )}

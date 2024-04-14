@@ -13,6 +13,7 @@ import {
   createPost,
   deletePost,
   deleteProfile,
+  followUser,
   getAllPost,
   getPost,
   getPostComments,
@@ -183,5 +184,11 @@ export const useGetUserSaves = (userId?: string) => {
     queryKey: ["GET_SAVES", userId],
     queryFn: () => getUserSaves(userId),
     enabled: !!userId,
+  });
+};
+
+export const useFollowUser = () => {
+  return useMutation({
+    mutationFn: (userId: string) => followUser(userId),
   });
 };

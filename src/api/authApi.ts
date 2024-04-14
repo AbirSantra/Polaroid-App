@@ -238,3 +238,13 @@ export const getUserSaves = async (userId?: string) => {
     throw error;
   }
 };
+
+export const followUser = async (userId?: string) => {
+  try {
+    const response = await authApi.post("/user/follow", { userId: userId });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
