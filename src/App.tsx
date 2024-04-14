@@ -31,7 +31,7 @@ function App() {
           <Route path="/post/:id" element={<Post />} />
         </Route>
       </Routes>
-      <Toaster expand />
+      <Toaster position="top-center" expand />
     </main>
   );
 }

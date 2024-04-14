@@ -2,9 +2,11 @@ import { Heart, Home, PencilLine, Search, UserRound } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useModal } from "@/context/ModalContext";
+import { useUserContext } from "@/context/AuthContext";
 
 const BottomBar = () => {
   const { openModal } = useModal();
+  const { user } = useUserContext();
 
   return (
     <div className="flex h-16 w-full items-center justify-between border-t bg-white px-8 text-gray-700">
@@ -41,7 +43,7 @@ const BottomBar = () => {
         <Heart size={24} />
       </NavLink>
       <NavLink
-        to={"/profile"}
+        to={`/profile/${user._id}`}
         className={({ isActive }) =>
           `group flex gap-4 ${isActive && "font-semibold text-rose-500"}`
         }

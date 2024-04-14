@@ -22,7 +22,7 @@ const Profile = () => {
   const { data: profile, isPending: isProfileLoading } = useGetUserProfile(id);
 
   return (
-    <div className="flex h-full min-h-screen flex-1 flex-col p-4 md:p-8">
+    <div className="flex h-full min-h-screen flex-1 flex-col md:p-8">
       {profile || !isProfileLoading ? (
         <ProfileInfo profileData={profile.data} currentUser={user} />
       ) : null}
@@ -71,77 +71,79 @@ export const ProfileInfo = ({
 
   return (
     <div className="flex w-full flex-col gap-8">
-      <div className="flex items-start justify-between">
-        <Avatar className="h-24 w-24 border border-gray-300">
-          <AvatarImage src={profileData.avatar} />
-          <AvatarFallback>
-            {profileData.fullName.charAt(0).toUpperCase()}
-          </AvatarFallback>
-        </Avatar>
-        {isCurrentUser && (
-          <Button
-            variant={"outline"}
-            className="w-fit font-semibold text-gray-500"
-          >
-            Edit Profile
-          </Button>
-        )}
-      </div>
-      <div className="space-y-2">
-        <p className="text-2xl font-semibold">{profileData.fullName}</p>
-        <p className="text-rose-500">@{profileData.username}</p>
-      </div>
-      <div className="flex items-center gap-4">
-        <p>
-          <span className="font-semibold">{profileData.followersCount}</span>{" "}
-          followers
-        </p>
-        <p>
-          <span className="font-semibold">{profileData.followingsCount}</span>{" "}
-          following
-        </p>
-      </div>
-      <p className="whitespace-pre-wrap">{profileData.bio}</p>
-      {!isCurrentUser && (
-        <div>
-          {isFollowing ? (
-            <Button variant={"outline"} onClick={handleFollowUser}>
-              Unfollow
-            </Button>
-          ) : (
-            <Button variant={"primary"} onClick={handleFollowUser}>
-              Follow
+      <div className="flex w-full flex-col gap-8 p-4 pb-0 sm:p-0">
+        <div className="flex items-start justify-between">
+          <Avatar className="h-24 w-24 border border-gray-300">
+            <AvatarImage src={profileData.avatar} />
+            <AvatarFallback>
+              {profileData.fullName.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          {isCurrentUser && (
+            <Button
+              variant={"outline"}
+              className="w-fit font-semibold text-gray-500"
+            >
+              Edit Profile
             </Button>
           )}
         </div>
-      )}
-
-      {isCurrentUser && (
-        <div className="flex w-full gap-2">
-          <Button
-            variant={"outline"}
-            className={
-              feedType === "POSTS"
-                ? "border-rose-500 text-rose-500 hover:bg-rose-50 hover:text-rose-600"
-                : "text-gray-500 hover:bg-rose-50 hover:text-rose-600"
-            }
-            onClick={() => setFeedType("POSTS")}
-          >
-            Posts
-          </Button>
-          <Button
-            variant={"outline"}
-            className={
-              feedType === "SAVES"
-                ? "border-rose-500 text-rose-500 hover:bg-rose-50 hover:text-rose-600"
-                : "text-gray-500 hover:bg-rose-50 hover:text-rose-600"
-            }
-            onClick={() => setFeedType("SAVES")}
-          >
-            Saved
-          </Button>
+        <div className="space-y-2">
+          <p className="text-2xl font-semibold">{profileData.fullName}</p>
+          <p className="text-rose-500">@{profileData.username}</p>
         </div>
-      )}
+        <div className="flex items-center gap-4">
+          <p>
+            <span className="font-semibold">{profileData.followersCount}</span>{" "}
+            followers
+          </p>
+          <p>
+            <span className="font-semibold">{profileData.followingsCount}</span>{" "}
+            following
+          </p>
+        </div>
+        <p className="whitespace-pre-wrap text-sm">{profileData.bio}</p>
+        {!isCurrentUser && (
+          <div>
+            {isFollowing ? (
+              <Button variant={"outline"} onClick={handleFollowUser}>
+                Unfollow
+              </Button>
+            ) : (
+              <Button variant={"primary"} onClick={handleFollowUser}>
+                Follow
+              </Button>
+            )}
+          </div>
+        )}
+
+        {isCurrentUser && (
+          <div className="flex w-full gap-2">
+            <Button
+              variant={"outline"}
+              className={
+                feedType === "POSTS"
+                  ? "border-rose-500 text-rose-500 hover:bg-rose-50 hover:text-rose-600"
+                  : "text-gray-500 hover:bg-rose-50 hover:text-rose-600"
+              }
+              onClick={() => setFeedType("POSTS")}
+            >
+              Posts
+            </Button>
+            <Button
+              variant={"outline"}
+              className={
+                feedType === "SAVES"
+                  ? "border-rose-500 text-rose-500 hover:bg-rose-50 hover:text-rose-600"
+                  : "text-gray-500 hover:bg-rose-50 hover:text-rose-600"
+              }
+              onClick={() => setFeedType("SAVES")}
+            >
+              Saved
+            </Button>
+          </div>
+        )}
+      </div>
 
       {feedType === "POSTS" && <PostsFeed profileData={profileData} />}
       {feedType === "SAVES" && <SavesFeed profileData={profileData} />}
