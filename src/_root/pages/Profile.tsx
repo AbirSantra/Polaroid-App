@@ -12,7 +12,7 @@ import { IPost, IProfile, IUser } from "@/lib/types";
 import { checkFollowStatus } from "@/lib/utils";
 import { AxiosError } from "axios";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const Profile = () => {
@@ -80,12 +80,14 @@ export const ProfileInfo = ({
             </AvatarFallback>
           </Avatar>
           {isCurrentUser && (
-            <Button
-              variant={"outline"}
-              className="w-fit font-semibold text-gray-500"
-            >
-              Edit Profile
-            </Button>
+            <Link to={"/settings"}>
+              <Button
+                variant={"outline"}
+                className="w-fit font-semibold text-gray-500"
+              >
+                Edit Profile
+              </Button>
+            </Link>
           )}
         </div>
         <div className="space-y-2">
