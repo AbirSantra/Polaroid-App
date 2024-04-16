@@ -19,6 +19,7 @@ import {
   getFollowingUsers,
   getPost,
   getPostComments,
+  getSearchUsers,
   getSuggestedUsers,
   getTrendingPosts,
   getUserPosts,
@@ -194,6 +195,14 @@ export const useGetUserSaves = (userId?: string) => {
     queryKey: ["GET_SAVES", userId],
     queryFn: () => getUserSaves(userId),
     enabled: !!userId,
+  });
+};
+
+export const useGetSearchUsers = (searchTerm?: string) => {
+  return useQuery({
+    queryKey: ["GET_SEARCH_USERS", searchTerm],
+    queryFn: () => getSearchUsers(searchTerm),
+    enabled: !!searchTerm,
   });
 };
 

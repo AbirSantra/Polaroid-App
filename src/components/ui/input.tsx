@@ -30,12 +30,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className
           )}
         >
-          {/* Search Button */}
-          {isSearch && (
-            <span className="cursor-pointer">
-              <Search size={18} />
-            </span>
-          )}
           {/* Icon */}
           {icon}
           {/* Input */}
@@ -54,6 +48,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               className="cursor-pointer select-none"
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </span>
+          )}
+          {/* Search Button */}
+          {isSearch && (
+            <span className="cursor-pointer">
+              <Search size={18} />
             </span>
           )}
         </div>

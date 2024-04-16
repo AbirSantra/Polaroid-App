@@ -280,3 +280,16 @@ export const getFollowingUsers = async () => {
     throw error;
   }
 };
+
+export const getSearchUsers = async (searchTerm?: string) => {
+  try {
+    console.log("Fetching Search Users");
+    const response = await authApi.post("/user/search", {
+      searchTerm: searchTerm,
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
