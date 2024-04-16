@@ -1,5 +1,6 @@
 import {
   useFollowUser,
+  useGetFollowingUsers,
   useGetSuggestedUsers,
 } from "@/lib/tanstack-query/queries";
 import { IUser } from "@/lib/types";
@@ -48,7 +49,31 @@ export const SuggestedUsers = () => {
 };
 
 export const FollowedUsers = () => {
-  return <div className="rounded border">Suggested Users</div>;
+  const { data: followings, isPending: isFollowingsLoading } =
+    useGetFollowingUsers();
+  return (
+    <div className="flex flex-col gap-4 rounded border p-4 text-xs">
+      <p className="font-medium">Your Follows</p>
+
+      {isFollowingsLoading || !followings.data.length ? (
+        <div className="flex h-full flex-1 flex-col sm:gap-4">
+          <UserCardSkeleton />
+          <UserCardSkeleton />
+          <UserCardSkeleton />
+        </div>
+      ) : (
+        <div className="flex h-full flex-1 flex-col sm:gap-4">
+          {followings.data.map((user: IUser) => (
+            <UserCard user={user} key={user.username} type="FOLLOWED" />
+          ))}
+        </div>
+      )}
+
+      <div className="cursor-pointer text-center text-xs font-medium text-gray-500">
+        See All
+      </div>
+    </div>
+  );
 };
 
 export const UserCard = ({

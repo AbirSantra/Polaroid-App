@@ -270,3 +270,13 @@ export const getSuggestedUsers = async () => {
     throw error;
   }
 };
+
+export const getFollowingUsers = async () => {
+  try {
+    const response = await authApi.get("/user/following");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

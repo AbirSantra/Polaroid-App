@@ -16,6 +16,7 @@ import {
   followUser,
   getAllPost,
   getFollowingPosts,
+  getFollowingUsers,
   getPost,
   getPostComments,
   getSuggestedUsers,
@@ -203,6 +204,13 @@ export const useGetSuggestedUsers = () => {
   });
 };
 
+export const useGetFollowingUsers = () => {
+  return useQuery({
+    queryKey: ["GET_FOLLOWING_USERS"],
+    queryFn: () => getFollowingUsers(),
+  });
+};
+
 export const useFollowUser = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -213,6 +221,9 @@ export const useFollowUser = () => {
       });
       queryClient.invalidateQueries({
         queryKey: ["GET_SUGGESTED_USERS"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["GET_FOLLOWING_USERS"],
       });
     },
   });
