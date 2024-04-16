@@ -31,7 +31,7 @@ export const SuggestedUsers = () => {
     <div className="flex flex-col gap-4 rounded border p-4 text-xs">
       <p className="font-medium">Follow Suggestions</p>
 
-      {isSuggestionsLoading || !suggestions.data.length ? (
+      {isSuggestionsLoading ? (
         <div className="flex h-full flex-1 flex-col sm:gap-4">
           <UserCardSkeleton />
           <UserCardSkeleton />
@@ -39,9 +39,15 @@ export const SuggestedUsers = () => {
         </div>
       ) : (
         <div className="flex h-full flex-1 flex-col sm:gap-4">
-          {suggestions.data.map((user: IUser) => (
-            <UserCard user={user} key={user.username} type="SUGGESTED" />
-          ))}
+          {!suggestions.data.length ? (
+            <p className="text-center text-[10px]">
+              You have followed every user!
+            </p>
+          ) : (
+            suggestions.data.map((user: IUser) => (
+              <UserCard user={user} key={user.username} type="SUGGESTED" />
+            ))
+          )}
         </div>
       )}
     </div>
@@ -55,7 +61,7 @@ export const FollowedUsers = () => {
     <div className="flex flex-col gap-4 rounded border p-4 text-xs">
       <p className="font-medium">Your Follows</p>
 
-      {isFollowingsLoading || !followings.data.length ? (
+      {isFollowingsLoading ? (
         <div className="flex h-full flex-1 flex-col sm:gap-4">
           <UserCardSkeleton />
           <UserCardSkeleton />
@@ -63,9 +69,16 @@ export const FollowedUsers = () => {
         </div>
       ) : (
         <div className="flex h-full flex-1 flex-col sm:gap-4">
-          {followings.data.map((user: IUser) => (
-            <UserCard user={user} key={user.username} type="FOLLOWED" />
-          ))}
+          {!followings.data.length ? (
+            <p className="text-center text-[10px]">
+              You are not following anyone
+            </p>
+          ) : (
+            followings.data.map((user: IUser) => (
+              <UserCard user={user} key={user.username} type="FOLLOWED" />
+            ))
+          )}
+          {}
         </div>
       )}
 
