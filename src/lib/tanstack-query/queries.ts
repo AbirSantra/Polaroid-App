@@ -18,6 +18,7 @@ import {
   getFollowingPosts,
   getPost,
   getPostComments,
+  getSuggestedUsers,
   getTrendingPosts,
   getUserPosts,
   getUserProfile,
@@ -195,6 +196,13 @@ export const useGetUserSaves = (userId?: string) => {
   });
 };
 
+export const useGetSuggestedUsers = () => {
+  return useQuery({
+    queryKey: ["GET_SUGGESTED_USERS"],
+    queryFn: () => getSuggestedUsers(),
+  });
+};
+
 export const useFollowUser = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -202,6 +210,9 @@ export const useFollowUser = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["FOLLOWING_POSTS"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["GET_SUGGESTED_USERS"],
       });
     },
   });

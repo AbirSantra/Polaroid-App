@@ -260,3 +260,13 @@ export const followUser = async (userId?: string) => {
     throw error;
   }
 };
+
+export const getSuggestedUsers = async () => {
+  try {
+    const response = await authApi.get("/user/suggested");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

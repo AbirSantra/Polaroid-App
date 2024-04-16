@@ -102,7 +102,9 @@ export const ProfileInfo = ({
             following
           </p>
         </div>
-        <p className="whitespace-pre-wrap text-sm">{profileData.bio}</p>
+        <p className="whitespace-pre-wrap text-sm">
+          {profileData.bio ? profileData.bio : "User has no bio"}
+        </p>
         {!isCurrentUser && (
           <div>
             {isFollowing ? (
