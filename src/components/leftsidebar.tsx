@@ -92,18 +92,18 @@ const LeftSideBar = () => {
 
       <div className="mt-auto w-full">
         <DropdownMenu>
-          <DropdownMenuTrigger className=" flex w-full items-center justify-between gap-4">
+          <DropdownMenuTrigger className=" flex w-full items-center gap-4">
             <Avatar className="h-12 w-12 border border-gray-300">
               <AvatarImage src={user.avatar} />
               <AvatarFallback>{avatarFallback}</AvatarFallback>
             </Avatar>
             <div className="hidden flex-col text-left xl:flex">
-              <p className="text-base font-semibold text-rose-500">
+              <p className="text-xs font-semibold text-rose-500">
                 {user.fullName}
               </p>
               <p className="text-sm text-gray-500">@{user.username}</p>
             </div>
-            <MoreVertical size={20} className="hidden xl:flex" />
+            <MoreVertical size={20} className="ml-auto hidden xl:flex" />
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="mb-4 ml-4 w-48 font-poppins"
