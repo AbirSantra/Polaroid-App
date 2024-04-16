@@ -62,47 +62,20 @@ const Explore = () => {
 export default Explore;
 
 export const UserCard = ({ user }: { user: IUser }) => {
-  const { mutateAsync: followUser, isPending: isFollowingUser } =
-    useFollowUser();
-
-  const handleFollowUser = async () => {
-    try {
-      const followResult = await followUser(user._id);
-      if (followResult.success) {
-        toast(`You are now following ${user.username}`);
-      }
-    } catch (error) {
-      console.log("Error: ", error);
-      if (error instanceof AxiosError) {
-        toast(error.response?.data.message);
-      }
-    }
-  };
-
   return (
-    <div className="flex items-center gap-3 rounded-md border border-gray-200 p-4">
-      <Link to={`/profile/${user._id}`}>
-        <Avatar className="h-10 w-10 border border-gray-300">
-          <AvatarImage src={user.avatar} />
-          <AvatarFallback>
-            {user.fullName.charAt(0).toUpperCase()}
-          </AvatarFallback>
-        </Avatar>
-      </Link>
-      <Link to={`/profile/${user._id}`} className="flex flex-col">
+    <Link
+      to={`/profile/${user._id}`}
+      className="flex items-center gap-3 rounded-md border border-gray-200 p-4"
+    >
+      <Avatar className="h-10 w-10 border border-gray-300">
+        <AvatarImage src={user.avatar} />
+        <AvatarFallback>{user.fullName.charAt(0).toUpperCase()}</AvatarFallback>
+      </Avatar>
+      <div className="flex flex-col">
         <p className="font-medium">{user.fullName}</p>
         <p className="text-[10px] text-gray-500">@{user.username}</p>
-      </Link>
-
-      <Button
-        size={"icon"}
-        variant={"ghost"}
-        className="ml-auto text-gray-500 hover:text-rose-500"
-        onClick={handleFollowUser}
-      >
-        <UserRoundPlusIcon size={20} />
-      </Button>
-    </div>
+      </div>
+    </Link>
   );
 };
 
