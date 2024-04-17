@@ -293,3 +293,13 @@ export const getSearchUsers = async (searchTerm?: string) => {
     throw error;
   }
 };
+
+export const getNotfications = async () => {
+  try {
+    const response = await authApi.get("/notification/all");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

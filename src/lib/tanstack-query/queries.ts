@@ -17,6 +17,7 @@ import {
   getAllPost,
   getFollowingPosts,
   getFollowingUsers,
+  getNotfications,
   getPost,
   getPostComments,
   getSearchUsers,
@@ -235,5 +236,12 @@ export const useFollowUser = () => {
         queryKey: ["GET_FOLLOWING_USERS"],
       });
     },
+  });
+};
+
+export const useGetNotifications = () => {
+  return useQuery({
+    queryKey: ["GET_NOTIFICATIONS"],
+    queryFn: () => getNotfications(),
   });
 };

@@ -107,3 +107,12 @@ export interface IFollow {
   user: string;
   following: string;
 }
+
+export interface INotification {
+  _id: string;
+  type: "FOLLOW" | "LIKE" | "COMMENT";
+  seen: boolean;
+  user: IUser;
+  recipient: string;
+  createdAt: string;
+}

@@ -101,7 +101,7 @@ const LeftSideBar = () => {
               <p className="text-xs font-semibold text-rose-500">
                 {user.fullName}
               </p>
-              <p className="text-sm text-gray-500">@{user.username}</p>
+              <p className="text-xs text-gray-500">@{user.username}</p>
             </div>
             <MoreVertical size={20} className="ml-auto hidden xl:flex" />
           </DropdownMenuTrigger>
