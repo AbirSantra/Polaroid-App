@@ -27,6 +27,7 @@ import {
   getUserProfile,
   getUserSaves,
   likePost,
+  markNotificationsAsSeen,
   savePost,
   signInUser,
   signOutUser,
@@ -243,5 +244,11 @@ export const useGetNotifications = () => {
   return useQuery({
     queryKey: ["GET_NOTIFICATIONS"],
     queryFn: () => getNotfications(),
+  });
+};
+
+export const useMarkNotificationsAsSeen = () => {
+  return useMutation({
+    mutationFn: () => markNotificationsAsSeen(),
   });
 };

@@ -303,3 +303,14 @@ export const getNotfications = async () => {
     throw error;
   }
 };
+
+export const markNotificationsAsSeen = async () => {
+  try {
+    console.log("Marking notifications as seen");
+    const response = await authApi.patch("/notification/mark-as-seen");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

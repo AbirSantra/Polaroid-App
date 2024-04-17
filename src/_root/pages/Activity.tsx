@@ -1,13 +1,27 @@
 import PageHeader from "@/components/page-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useGetNotifications } from "@/lib/tanstack-query/queries";
+import {
+  useGetNotifications,
+  useMarkNotificationsAsSeen,
+} from "@/lib/tanstack-query/queries";
 import { INotification } from "@/lib/types";
 import moment from "moment";
+import { useEffect } from "react";
 
 interface Props {}
 const Activity = (props: Props) => {
   const { data: notifications, isPending: isNotificationsLoading } =
     useGetNotifications();
+
+  const { mutateAsync: markNotifcationsAsSeen } = useMarkNotificationsAsSeen();
+
+  useEffect(() => {
+    const handleMark = async () => {
+      const result = await markNotifcationsAsSeen();
+    };
+    handleMark();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex h-full min-h-screen flex-1 flex-col gap-6 p-4 md:gap-8 md:p-8">
