@@ -48,3 +48,7 @@ export const PostValidation = z.object({
   content: z.string().min(1, { message: "Post content cannot be empty." }),
   file: z.custom<File>().optional(),
 });
+
+export const CommentValidation = z.object({
+  content: z.string(),
+});

@@ -1,3 +1,4 @@
+import * as z from "zod";
 import { useUserContext } from "@/context/AuthContext";
 import { useModal } from "@/context/ModalContext";
 import {
@@ -30,11 +31,22 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
+import { CommentValidation } from "@/lib/validations";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 
 const PostDetails = ({ postData }: { postData: IPost }) => {
   const { user } = useUserContext();
 
   const createdAt = moment(postData?.createdAt).fromNow();
+
+  const form = useForm<z.infer<typeof CommentValidation>>({
+    resolver: zodResolver(CommentValidation),
+    defaultValues: {
+      content: "",
+    },
+  });
 
   const { openModal } = useModal();
 
@@ -77,23 +89,19 @@ const PostDetails = ({ postData }: { postData: IPost }) => {
     postData?.commentsCount
   );
 
-  const [comment, setComment] = useState<string>("");
-
-  const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(e.target.value);
-  };
-
   const { mutateAsync: commentPost } = useCommentPost();
 
-  const handleCommentPost = async () => {
+  const handleCommentPost = async (
+    values: z.infer<typeof CommentValidation>
+  ) => {
     try {
       const commentResult = await commentPost({
         postId: postData?._id,
-        content: comment,
+        content: values.content,
       });
       if (commentResult.success) {
+        form.reset();
         setCommentsCount((prev) => prev + 1);
-        setComment("");
         toast("Added comment!");
       }
     } catch (error) {
@@ -223,24 +231,44 @@ const PostDetails = ({ postData }: { postData: IPost }) => {
         </span>
       </div>
       {/* Comment Box */}
-      <div className="mt-2 flex w-full items-center gap-4">
-        <Avatar className="h-8 w-8 border border-gray-300">
-          <AvatarImage src={user.avatar} />
-          <AvatarFallback>
-            {user.fullName.charAt(0).toUpperCase()}
-          </AvatarFallback>
-        </Avatar>
-        <Input
-          type="text"
-          placeholder="Add a comment"
-          value={comment}
-          onChange={handleCommentChange}
-          className="rounded-md border-gray-100 p-2 font-normal"
-        />
-        <Button variant={"ghost"} className="p-0" onClick={handleCommentPost}>
-          <SendHorizontalIcon size={16} className="text-gray-500" />
-        </Button>
-      </div>
+      <Form {...form}>
+        <div className="flex w-full items-center gap-4">
+          <Avatar className="h-8 w-8 border border-gray-300">
+            <AvatarImage src={user.avatar} />
+            <AvatarFallback>
+              {user.fullName.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <form
+            onSubmit={form.handleSubmit(handleCommentPost)}
+            className="w-full"
+          >
+            <FormField
+              control={form.control}
+              name="content"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Add a comment"
+                      className="rounded-md border-gray-100 p-2 font-normal"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+          <Button
+            className="bg-transparent p-0 hover:bg-transparent hover:text-rose-500"
+            type="submit"
+          >
+            <SendHorizontalIcon size={16} className="text-gray-500" />
+          </Button>
+        </div>
+      </Form>
     </div>
   );
 };

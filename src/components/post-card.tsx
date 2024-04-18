@@ -1,3 +1,4 @@
+import * as z from "zod";
 import { IPost } from "@/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import moment from "moment";
@@ -31,10 +32,21 @@ import { toast } from "sonner";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { CommentValidation } from "@/lib/validations";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 
 const PostCard = ({ postData }: { postData: IPost }) => {
   const { user } = useUserContext();
   const createdAt = moment(postData.createdAt).fromNow();
+
+  const form = useForm<z.infer<typeof CommentValidation>>({
+    resolver: zodResolver(CommentValidation),
+    defaultValues: {
+      content: "",
+    },
+  });
 
   const { openModal } = useModal();
 
@@ -79,23 +91,20 @@ const PostCard = ({ postData }: { postData: IPost }) => {
     postData.commentsCount
   );
 
-  const [comment, setComment] = useState<string>("");
-
-  const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(e.target.value);
-  };
-
   const { mutateAsync: commentPost } = useCommentPost();
 
-  const handleCommentPost = async () => {
+  const handleCommentPost = async (
+    values: z.infer<typeof CommentValidation>
+  ) => {
     try {
       const commentResult = await commentPost({
         postId: postData._id,
-        content: comment,
+        content: values.content,
       });
       if (commentResult.success) {
         setCommentsCount((prev) => prev + 1);
         setIsCommentActive((prev) => !prev);
+        form.reset();
         toast("Added comment!");
       }
     } catch (error) {
@@ -237,24 +246,44 @@ const PostCard = ({ postData }: { postData: IPost }) => {
       </div>
       {/* Comment Box */}
       {isCommentActive && (
-        <div className="flex w-full items-center gap-4">
-          <Avatar className="h-8 w-8 border border-gray-300">
-            <AvatarImage src={user.avatar} />
-            <AvatarFallback>
-              {user.fullName.charAt(0).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-          <Input
-            type="text"
-            placeholder="Add a comment"
-            value={comment}
-            onChange={handleCommentChange}
-            className="rounded-md border-gray-100 p-2 font-normal"
-          />
-          <Button variant={"ghost"} className="p-0" onClick={handleCommentPost}>
-            <SendHorizontalIcon size={16} className="text-gray-500" />
-          </Button>
-        </div>
+        <Form {...form}>
+          <div className="flex w-full items-center gap-4">
+            <Avatar className="h-8 w-8 border border-gray-300">
+              <AvatarImage src={user.avatar} />
+              <AvatarFallback>
+                {user.fullName.charAt(0).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <form
+              onSubmit={form.handleSubmit(handleCommentPost)}
+              className="w-full"
+            >
+              <FormField
+                control={form.control}
+                name="content"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="Add a comment"
+                        className="rounded-md border-gray-100 p-2 font-normal"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </form>
+            <Button
+              className="bg-transparent p-0 hover:bg-transparent hover:text-rose-500"
+              type="submit"
+            >
+              <SendHorizontalIcon size={16} className="text-gray-500" />
+            </Button>
+          </div>
+        </Form>
       )}
     </div>
   );
