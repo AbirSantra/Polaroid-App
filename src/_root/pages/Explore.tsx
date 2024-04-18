@@ -1,15 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import useDebounce from "@/hooks/useDebounce";
-import { useFollowUser, useGetSearchUsers } from "@/lib/tanstack-query/queries";
+import { useGetSearchUsers } from "@/lib/tanstack-query/queries";
 import { IUser } from "@/lib/types";
-import { AxiosError } from "axios";
-import { UserRoundPlusIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "sonner";
 
 const Explore = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");

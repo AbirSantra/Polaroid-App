@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AddPostModal from "./add-post-modal";
 import EditPostModal from "./edit-post-modal";
 import DeleteProfileModal from "./delete-profile-modal";

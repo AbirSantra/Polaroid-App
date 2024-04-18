@@ -1,5 +1,3 @@
-import React from "react";
-
 const SectionHeader = ({ title }: { title: string }) => {
   return (
     <div className="flex w-full flex-col gap-2">

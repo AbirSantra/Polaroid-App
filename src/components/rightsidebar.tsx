@@ -96,8 +96,7 @@ export const UserCard = ({
   user: IUser;
   type: "SUGGESTED" | "FOLLOWED";
 }) => {
-  const { mutateAsync: followUser, isPending: isFollowingUser } =
-    useFollowUser();
+  const { mutateAsync: followUser } = useFollowUser();
 
   const handleFollowUser = async () => {
     try {

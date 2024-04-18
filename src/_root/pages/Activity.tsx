@@ -10,8 +10,7 @@ import { CheckCircleIcon } from "lucide-react";
 import moment from "moment";
 import { toast } from "sonner";
 
-interface Props {}
-const Activity = (props: Props) => {
+const Activity = () => {
   const { data: notifications, isPending: isNotificationsLoading } =
     useGetNotifications();
 

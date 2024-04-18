@@ -45,8 +45,7 @@ export const ProfileInfo = ({
     checkFollowStatus({ profile: profileData, userId: currentUser._id })
   );
 
-  const { mutateAsync: followUser, isPending: isFollowingUser } =
-    useFollowUser();
+  const { mutateAsync: followUser } = useFollowUser();
 
   const handleFollowUser = async () => {
     try {
