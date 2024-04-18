@@ -81,21 +81,6 @@ body,
   }
 }
 
-@layer utilities {
-  .custom-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-gray-50;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #5c5c7b;
-    border-radius: 50px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #7878a3;
-  }
+::-webkit-scrollbar {
+  @apply hidden;
 }
