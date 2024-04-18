@@ -4,9 +4,29 @@ import LeftSideBar from "@/components/leftsidebar";
 import RightSideBar from "@/components/rightsidebar";
 import TopBar from "@/components/topbar";
 import BottomBar from "@/components/bottombar";
+import PolaroidLogo from "../assets/polaroid-logo.png";
 
 const RootLayout = () => {
-  const { isAuthenticated } = useUserContext();
+  const { isAuthenticated, isLoading } = useUserContext();
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen w-full flex-col items-center justify-center gap-8 p-8 md:p-16">
+        {/* Logo */}
+        <div className="my-auto flex flex-col items-center gap-16">
+          <div className="flex h-16 w-16 animate-spin items-center justify-center">
+            <img src={PolaroidLogo} alt="" />
+          </div>
+          <p className="text-xl font-semibold">Loading...</p>
+        </div>
+        {/* Tagline */}
+        <div className="text-center font-semibold text-gray-500">
+          <p>Capture Moments.</p>
+          <p>Share Stories.</p>
+        </div>
+      </div>
+    );
+  }
 
   return isAuthenticated ? (
     <div className="relative mx-auto flex h-full w-full max-w-[1200px] flex-col md:flex md:flex-row">
