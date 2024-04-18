@@ -248,7 +248,13 @@ export const useGetNotifications = () => {
 };
 
 export const useMarkNotificationsAsSeen = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: () => markNotificationsAsSeen(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["GET_NOTIFICATIONS"],
+      });
+    },
   });
 };

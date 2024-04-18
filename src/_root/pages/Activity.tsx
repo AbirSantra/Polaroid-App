@@ -1,12 +1,14 @@
 import PageHeader from "@/components/page-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   useGetNotifications,
   useMarkNotificationsAsSeen,
 } from "@/lib/tanstack-query/queries";
 import { INotification } from "@/lib/types";
+import { CheckCircleIcon } from "lucide-react";
 import moment from "moment";
-import { useEffect } from "react";
+import { toast } from "sonner";
 
 interface Props {}
 const Activity = (props: Props) => {
@@ -15,17 +17,27 @@ const Activity = (props: Props) => {
 
   const { mutateAsync: markNotifcationsAsSeen } = useMarkNotificationsAsSeen();
 
-  useEffect(() => {
-    const handleMark = async () => {
-      const result = await markNotifcationsAsSeen();
-    };
-    handleMark();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const handleMarkAllAsSeen = async () => {
+    const result = await markNotifcationsAsSeen();
+    if (result.success) {
+      toast("Marked all notifications as seen!");
+    }
+  };
 
   return (
     <div className="flex h-full min-h-screen flex-1 flex-col gap-6 p-4 md:gap-8 md:p-8">
-      <PageHeader title="Activity" />
+      <div className="flex items-start justify-between">
+        <PageHeader title="Activity" />
+        <Button
+          variant={"outline"}
+          className="flex w-fit items-center gap-2 text-xs font-semibold text-gray-500"
+          onClick={handleMarkAllAsSeen}
+        >
+          <CheckCircleIcon size={14} className="text-rose-500" />
+          Mark all as seen
+        </Button>
+      </div>
+
       <div className="flex flex-col gap-4">
         {isNotificationsLoading ? (
           <div className="flex h-full flex-1 flex-col sm:gap-4">Loading</div>
