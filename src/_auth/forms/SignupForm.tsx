@@ -143,7 +143,11 @@ const SignupForm = () => {
             )}
           />
           <div className="w-full space-y-4 pt-4">
-            <Button variant={"primary"} type="submit">
+            <Button
+              variant={"primary"}
+              type="submit"
+              disabled={isSignInPending || isSignUpPending}
+            >
               {isSignUpPending || isSignInPending || isUserLoading
                 ? "Signing you in..."
                 : "Sign Up"}

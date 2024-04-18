@@ -99,8 +99,12 @@ const SigninForm = () => {
             )}
           />
           <div className="w-full space-y-4 pt-4">
-            <Button variant={"primary"} type="submit">
-              {isUserLoading || isSignInPending ? "Loading" : "Sign In"}
+            <Button
+              variant={"primary"}
+              type="submit"
+              disabled={isSignInPending}
+            >
+              {isUserLoading || isSignInPending ? "Loading..." : "Sign In"}
             </Button>
             <Button variant={"outline"} className="text-gray-500">
               <img
