@@ -97,13 +97,19 @@ const LeftSideBar = () => {
               <AvatarImage src={user.avatar} />
               <AvatarFallback>{avatarFallback}</AvatarFallback>
             </Avatar>
-            <div className="hidden flex-col text-left xl:flex">
-              <p className="text-xs font-semibold text-rose-500">
+            <div className="line-clamp-1 hidden flex-col text-left xl:flex">
+              <p className="line-clamp-1 text-xs font-semibold text-rose-500">
                 {user.fullName}
               </p>
-              <p className="text-xs text-gray-500">@{user.username}</p>
+
+              <p className="line-clamp-1 text-xs text-gray-500">
+                @{user.username}
+              </p>
             </div>
-            <MoreVertical size={20} className="ml-auto hidden xl:flex" />
+            <MoreVertical
+              size={20}
+              className="ml-auto hidden min-w-5 xl:flex"
+            />
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="mb-4 ml-4 w-48 font-poppins"

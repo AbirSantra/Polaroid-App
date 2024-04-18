@@ -122,9 +122,14 @@ export const UserCard = ({
           </AvatarFallback>
         </Avatar>
       </Link>
-      <Link to={`/profile/${user._id}`} className="flex flex-col">
-        <p className="font-medium">{user.fullName}</p>
-        <p className="text-[10px] text-gray-500">@{user.username}</p>
+      <Link
+        to={`/profile/${user._id}`}
+        className="line-clamp-1 flex w-full flex-col"
+      >
+        <p className="line-clamp-1 font-medium">{user.fullName}</p>
+        <p className="line-clamp-1 text-[10px] text-gray-500">
+          @{user.username}
+        </p>
       </Link>
       {type === "SUGGESTED" && (
         <Button

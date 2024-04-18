@@ -8,8 +8,8 @@ import {
 } from "@/lib/types";
 import axios from "axios";
 
-// const BASE_URL = "http://localhost:8000/api";
-const BASE_URL = "https://polaroid-server.onrender.com/api";
+const BASE_URL = "http://localhost:8000/api";
+// const BASE_URL = "https://polaroid-server.onrender.com/api";
 
 export const authApi = axios.create({
   baseURL: BASE_URL,
