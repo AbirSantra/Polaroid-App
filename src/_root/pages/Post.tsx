@@ -42,7 +42,7 @@ const Post = () => {
           {comments.data.map((comment: IComment) => {
             const commentedAt = moment(comment.createdAt).fromNow(true);
             return (
-              <div className="flex w-full gap-4">
+              <div className="flex w-full gap-4" key={comment._id}>
                 <Avatar className="h-10 w-10 border border-gray-300">
                   <AvatarImage src={comment.user.avatar} />
                   <AvatarFallback>

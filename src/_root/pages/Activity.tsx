@@ -8,6 +8,7 @@ import {
 import { INotification } from "@/lib/types";
 import { CheckCircleIcon } from "lucide-react";
 import moment from "moment";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 const Activity = () => {
@@ -66,11 +67,17 @@ export const NotificationCard = ({
 }: {
   notification: INotification;
 }) => {
+  // console.log(notification);
   const notificationType = notification.type;
   const createdAt = moment(notification.createdAt).fromNow();
 
+  const link =
+    notificationType === "FOLLOW"
+      ? `/profile/${notification.user._id}`
+      : `/post/${notification.post}`;
+
   return (
-    <div className="flex items-center gap-4">
+    <Link to={link} className="flex items-center gap-4">
       <Avatar className="h-12 w-12 border border-gray-300">
         <AvatarImage src={notification.user.avatar} />
         <AvatarFallback>
@@ -101,6 +108,6 @@ export const NotificationCard = ({
       {!notification.seen && (
         <span className="ml-auto h-2 w-2 rounded-full bg-rose-500"></span>
       )}
-    </div>
+    </Link>
   );
 };
