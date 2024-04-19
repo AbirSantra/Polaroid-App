@@ -115,4 +115,5 @@ export interface INotification {
   user: IUser;
   recipient: string;
   createdAt: string;
+  post: string;
 }
