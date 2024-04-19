@@ -19,7 +19,7 @@ const Post = () => {
     useGetPostComments(postId);
 
   return (
-    <div className="flex h-full min-h-screen flex-1 flex-col gap-8 p-4 md:p-8">
+    <div className="flex h-full min-h-dvh flex-1 flex-col gap-8 p-4 md:p-8">
       <div className="flex w-full items-center gap-4">
         <ArrowLeftIcon
           className="cursor-pointer text-rose-500"

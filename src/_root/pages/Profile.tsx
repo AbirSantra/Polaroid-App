@@ -22,7 +22,7 @@ const Profile = () => {
   const { data: profile, isPending: isProfileLoading } = useGetUserProfile(id);
 
   return (
-    <div className="flex h-full min-h-screen flex-1 flex-col md:p-8">
+    <div className="flex h-full min-h-dvh flex-1 flex-col md:p-8">
       {profile || !isProfileLoading ? (
         <ProfileInfo profileData={profile.data} currentUser={user} />
       ) : null}

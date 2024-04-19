@@ -8,6 +8,7 @@ import {
 import { INotification } from "@/lib/types";
 import { CheckCircleIcon } from "lucide-react";
 import moment from "moment";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -24,8 +25,12 @@ const Activity = () => {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div className="flex h-full min-h-screen flex-1 flex-col gap-6 p-4 md:gap-8 md:p-8">
+    <div className="flex h-full min-h-dvh flex-1 flex-col gap-6 p-4 md:gap-8 md:p-8">
       <div className="flex items-start justify-between">
         <PageHeader title="Activity" />
         <Button

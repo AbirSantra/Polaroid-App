@@ -11,7 +11,7 @@ const RootLayout = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen w-full flex-col items-center justify-center gap-8 p-8 md:p-16">
+      <div className="flex h-dvh w-full flex-col items-center justify-center gap-8 p-8 md:p-16">
         {/* Logo */}
         <div className="my-auto flex flex-col items-center gap-16">
           <div className="flex h-16 w-16 animate-spin items-center justify-center">
@@ -34,15 +34,15 @@ const RootLayout = () => {
         <TopBar />
       </div>
 
-      <div className="sticky inset-y-0 left-0 hidden h-screen border-r md:flex">
+      <div className="sticky inset-y-0 left-0 hidden h-dvh border-r md:flex">
         <LeftSideBar />
       </div>
 
-      <section className="min-h-screen flex-1">
+      <section className="min-h-dvh flex-1">
         <Outlet />
       </section>
 
-      <div className="sticky inset-y-0 right-0 hidden h-screen border-l min-[900px]:flex">
+      <div className="sticky inset-y-0 right-0 hidden h-dvh border-l min-[900px]:flex">
         <RightSideBar />
       </div>
 

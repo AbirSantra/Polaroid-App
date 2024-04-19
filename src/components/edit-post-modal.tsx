@@ -105,7 +105,7 @@ const EditPostModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="flex h-screen flex-col font-poppins sm:max-w-[500px] md:h-fit">
+      <DialogContent className="flex h-dvh flex-col font-poppins sm:max-w-[500px] md:h-fit">
         <DialogHeader>
           <DialogTitle className="">Edit Post</DialogTitle>
         </DialogHeader>
