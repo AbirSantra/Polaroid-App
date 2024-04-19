@@ -5,6 +5,7 @@ import { useGetPost, useGetPostComments } from "@/lib/tanstack-query/queries";
 import { IComment } from "@/lib/types";
 import { ArrowLeftIcon } from "lucide-react";
 import moment from "moment";
+import { useEffect } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -17,6 +18,10 @@ const Post = () => {
 
   const { data: comments, isPending: isCommentsLoading } =
     useGetPostComments(postId);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex h-full min-h-dvh flex-1 flex-col gap-8 p-4 md:p-8">
