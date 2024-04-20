@@ -31,7 +31,7 @@ const Explore = () => {
 
       <div className="flex flex-col gap-4">
         {isUsersLoading ? (
-          <div className="flex h-full flex-1 flex-col sm:gap-4">
+          <div className="flex h-full flex-1 flex-col gap-4">
             <UserCardSkeleton />
             <UserCardSkeleton />
             <UserCardSkeleton />

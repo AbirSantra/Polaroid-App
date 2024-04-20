@@ -5,6 +5,7 @@ import RightSideBar from "@/components/rightsidebar";
 import TopBar from "@/components/topbar";
 import BottomBar from "@/components/bottombar";
 import PolaroidLogo from "../assets/polaroid-logo.png";
+import HeadRoom from "react-headroom";
 
 const RootLayout = () => {
   const { isAuthenticated, isLoading } = useUserContext();
@@ -30,9 +31,11 @@ const RootLayout = () => {
 
   return isAuthenticated ? (
     <div className="relative mx-auto flex h-full w-full max-w-[1200px] flex-col md:flex md:flex-row">
-      <div className="sticky inset-x-0 top-0 z-50 w-full md:hidden">
-        <TopBar />
-      </div>
+      <HeadRoom>
+        <div className="sticky inset-x-0 top-0 z-50 w-full md:hidden">
+          <TopBar />
+        </div>
+      </HeadRoom>
 
       <div className="sticky inset-y-0 left-0 hidden h-dvh border-r md:flex">
         <LeftSideBar />

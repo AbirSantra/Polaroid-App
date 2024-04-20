@@ -66,10 +66,10 @@ const SignupForm = () => {
   return (
     <Form {...form}>
       <div className="flex w-full max-w-80 flex-col items-center justify-center gap-8">
-        <div className="flex h-16 w-16 items-center justify-center md:hidden">
+        <div className="flex h-12 w-12 items-center justify-center sm:h-16 sm:w-16 md:hidden">
           <img src={PolaroidLogo} alt="" />
         </div>
-        <p className="mb-8 text-3xl font-semibold">Join us today</p>
+        <p className="mb-8 text-2xl font-semibold sm:text-3xl">Join us today</p>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full space-y-4"

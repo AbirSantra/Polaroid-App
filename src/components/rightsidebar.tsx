@@ -135,7 +135,7 @@ export const UserCard = ({
         <Button
           size={"icon"}
           variant={"ghost"}
-          className="ml-auto text-gray-500 hover:text-rose-500"
+          className="ml-auto text-gray-500 hover:bg-transparent hover:text-rose-500"
           onClick={handleFollowUser}
         >
           <UserRoundPlusIcon size={20} />

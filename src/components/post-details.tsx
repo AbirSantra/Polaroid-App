@@ -142,7 +142,7 @@ const PostDetails = ({ postData }: { postData: IPost }) => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="flex w-full flex-col gap-6">
       {/* User Header */}
       <div className="flex w-full items-center gap-4">
         <Avatar className="h-12 w-12 border border-gray-300">
@@ -189,7 +189,7 @@ const PostDetails = ({ postData }: { postData: IPost }) => {
         )}
       </div>
       {/* Content */}
-      <p className="whitespace-pre-wrap text-sm text-gray-800">
+      <p className="whitespace-pre-wrap text-xs text-gray-800 sm:text-sm">
         {postData.content}
       </p>
       {/* Image */}
@@ -241,13 +241,13 @@ const PostDetails = ({ postData }: { postData: IPost }) => {
           </Avatar>
           <form
             onSubmit={form.handleSubmit(handleCommentPost)}
-            className="w-full"
+            className="flex w-full items-center justify-between gap-4"
           >
             <FormField
               control={form.control}
               name="content"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <FormControl>
                     <Input
                       type="text"
@@ -260,13 +260,14 @@ const PostDetails = ({ postData }: { postData: IPost }) => {
                 </FormItem>
               )}
             />
+            <Button
+              className="bg-transparent px-0 text-gray-500 hover:bg-transparent hover:text-rose-500"
+              type="submit"
+              // onClick={form.handleSubmit(handleCommentPost)}
+            >
+              <SendHorizontalIcon size={16} />
+            </Button>
           </form>
-          <Button
-            className="bg-transparent p-0 hover:bg-transparent hover:text-rose-500"
-            type="submit"
-          >
-            <SendHorizontalIcon size={16} className="text-gray-500" />
-          </Button>
         </div>
       </Form>
     </div>

@@ -11,7 +11,7 @@ const AuthLayout = () => {
       <div className="flex h-dvh w-full flex-col items-center justify-center gap-8 p-8 md:p-16">
         {/* Logo */}
         <div className="my-auto flex flex-col items-center gap-16">
-          <div className="flex h-16 w-16 animate-spin items-center justify-center">
+          <div className="flex h-12 w-12 animate-spin items-center justify-center sm:h-16 sm:w-16">
             <img src={PolaroidLogo} alt="" />
           </div>
           <p className="text-xl font-semibold">Loading...</p>
