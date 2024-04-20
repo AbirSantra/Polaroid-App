@@ -25,6 +25,10 @@ const RootLayout = () => {
           <p>Capture Moments.</p>
           <p>Share Stories.</p>
         </div>
+        <p className="text-center text-xs text-gray-500">
+          Important: Polaroid is hosted on a free, shared server which can
+          result in loading times upto 30-50 seconds for the first time.
+        </p>
       </div>
     );
   }
