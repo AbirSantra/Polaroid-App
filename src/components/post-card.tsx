@@ -157,7 +157,7 @@ const PostCard = ({ postData }: { postData: IPost }) => {
           </Avatar>
         </Link>
         <Link to={`/profile/${postData.user._id}`}>
-          <p className="text-sm font-semibold text-gray-900">
+          <p className="text-xs font-semibold text-gray-900 sm:text-sm">
             {postData.user.username}
           </p>
         </Link>
@@ -197,14 +197,14 @@ const PostCard = ({ postData }: { postData: IPost }) => {
       </div>
       {/* Content */}
       <Link to={`/post/${postData._id}`}>
-        <p className="whitespace-pre-wrap text-sm text-gray-800">
+        <p className="whitespace-pre-wrap text-xs text-gray-800 sm:text-sm">
           {postData.content}
         </p>
       </Link>
       {/* Image */}
       {postData.imageUrl ? (
         <Link to={`/post/${postData._id}`}>
-          <div className="flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-md border border-gray-300">
+          <div className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-md border border-gray-300">
             <img
               src={postData.imageUrl}
               alt={postData.imageId}
@@ -256,13 +256,13 @@ const PostCard = ({ postData }: { postData: IPost }) => {
             </Avatar>
             <form
               onSubmit={form.handleSubmit(handleCommentPost)}
-              className="w-full"
+              className="flex w-full items-center justify-between gap-4"
             >
               <FormField
                 control={form.control}
                 name="content"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="w-full">
                     <FormControl>
                       <Input
                         type="text"
@@ -275,13 +275,13 @@ const PostCard = ({ postData }: { postData: IPost }) => {
                   </FormItem>
                 )}
               />
+              <Button
+                className="bg-transparent px-0 text-gray-500 hover:bg-transparent hover:text-rose-500"
+                type="submit"
+              >
+                <SendHorizontalIcon size={16} />
+              </Button>
             </form>
-            <Button
-              className="bg-transparent p-0 hover:bg-transparent hover:text-rose-500"
-              type="submit"
-            >
-              <SendHorizontalIcon size={16} className="text-gray-500" />
-            </Button>
           </div>
         </Form>
       )}

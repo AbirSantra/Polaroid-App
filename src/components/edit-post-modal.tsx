@@ -105,14 +105,14 @@ const EditPostModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="flex h-screen flex-col font-poppins sm:max-w-[500px] md:h-fit">
+      <DialogContent className="flex h-dvh flex-col gap-6 font-poppins sm:max-w-[500px] md:h-fit">
         <DialogHeader>
           <DialogTitle className="">Edit Post</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex h-full flex-col gap-4"
+            className="flex h-full flex-col gap-6"
           >
             <FormField
               control={form.control}
@@ -167,7 +167,7 @@ const EditPostModal = () => {
                 <img
                   src={imagePreview}
                   alt=""
-                  className="aspect-auto w-full object-cover"
+                  className="aspect-square w-full object-cover"
                 />
               </div>
             )}

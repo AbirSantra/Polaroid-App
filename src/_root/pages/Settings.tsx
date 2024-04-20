@@ -2,8 +2,13 @@ import ChangePassword from "@/components/change-password";
 import DeleteProfile from "@/components/delete-profile";
 import EditProfile from "@/components/edit-profile";
 import PageHeader from "@/components/page-header";
+import { useEffect } from "react";
 
 const Settings = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="flex flex-1 flex-col gap-8 p-4 md:gap-8 md:p-8">
       <PageHeader title="Settings" />

@@ -11,7 +11,7 @@ import {
 import { IPost, IProfile, IUser } from "@/lib/types";
 import { checkFollowStatus } from "@/lib/utils";
 import { AxiosError } from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -21,8 +21,12 @@ const Profile = () => {
 
   const { data: profile, isPending: isProfileLoading } = useGetUserProfile(id);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div className="flex h-full min-h-screen flex-1 flex-col md:p-8">
+    <div className="flex h-full min-h-dvh flex-1 flex-col md:p-8">
       {profile || !isProfileLoading ? (
         <ProfileInfo profileData={profile.data} currentUser={user} />
       ) : null}

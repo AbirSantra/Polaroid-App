@@ -20,7 +20,7 @@ const Explore = () => {
     useGetSearchUsers(debouncedSearch);
 
   return (
-    <div className="flex h-full min-h-screen flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+    <div className="flex h-full min-h-dvh flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
       <Input
         isSearch={true}
         placeholder="Search Polaroid users"
@@ -31,7 +31,7 @@ const Explore = () => {
 
       <div className="flex flex-col gap-4">
         {isUsersLoading ? (
-          <div className="flex h-full flex-1 flex-col sm:gap-4">
+          <div className="flex h-full flex-1 flex-col gap-4">
             <UserCardSkeleton />
             <UserCardSkeleton />
             <UserCardSkeleton />

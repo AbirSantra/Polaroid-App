@@ -5,13 +5,14 @@ import RightSideBar from "@/components/rightsidebar";
 import TopBar from "@/components/topbar";
 import BottomBar from "@/components/bottombar";
 import PolaroidLogo from "../assets/polaroid-logo.png";
+import HeadRoom from "react-headroom";
 
 const RootLayout = () => {
   const { isAuthenticated, isLoading } = useUserContext();
 
   if (isLoading) {
     return (
-      <div className="flex h-screen w-full flex-col items-center justify-center gap-8 p-8 md:p-16">
+      <div className="flex h-dvh w-full flex-col items-center justify-center gap-8 p-8 md:p-16">
         {/* Logo */}
         <div className="my-auto flex flex-col items-center gap-16">
           <div className="flex h-16 w-16 animate-spin items-center justify-center">
@@ -30,19 +31,21 @@ const RootLayout = () => {
 
   return isAuthenticated ? (
     <div className="relative mx-auto flex h-full w-full max-w-[1200px] flex-col md:flex md:flex-row">
-      <div className="sticky inset-x-0 top-0 z-50 w-full md:hidden">
-        <TopBar />
-      </div>
+      <HeadRoom>
+        <div className="sticky inset-x-0 top-0 z-50 w-full md:hidden">
+          <TopBar />
+        </div>
+      </HeadRoom>
 
-      <div className="sticky inset-y-0 left-0 hidden h-screen border-r md:flex">
+      <div className="sticky inset-y-0 left-0 hidden h-dvh border-r md:flex">
         <LeftSideBar />
       </div>
 
-      <section className="min-h-screen flex-1">
+      <section className="min-h-dvh flex-1">
         <Outlet />
       </section>
 
-      <div className="sticky inset-y-0 right-0 hidden h-screen border-l min-[900px]:flex">
+      <div className="sticky inset-y-0 right-0 hidden h-dvh border-l min-[900px]:flex">
         <RightSideBar />
       </div>
 

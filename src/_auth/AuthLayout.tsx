@@ -4,13 +4,32 @@ import PolaroidLogo from "../assets/polaroid-logo.png";
 import { useUserContext } from "@/context/AuthContext";
 
 const AuthLayout = () => {
-  const { isAuthenticated } = useUserContext();
+  const { isAuthenticated, isLoading } = useUserContext();
+
+  if (isLoading) {
+    return (
+      <div className="flex h-dvh w-full flex-col items-center justify-center gap-8 p-8 md:p-16">
+        {/* Logo */}
+        <div className="my-auto flex flex-col items-center gap-16">
+          <div className="flex h-12 w-12 animate-spin items-center justify-center sm:h-16 sm:w-16">
+            <img src={PolaroidLogo} alt="" />
+          </div>
+          <p className="text-xl font-semibold">Loading...</p>
+        </div>
+        {/* Tagline */}
+        <div className="text-center font-semibold text-gray-500">
+          <p>Capture Moments.</p>
+          <p>Share Stories.</p>
+        </div>
+      </div>
+    );
+  }
 
   return isAuthenticated ? (
     <Navigate to="/" />
   ) : (
-    <div className="flex h-screen w-full">
-      <section className="hidden h-screen w-1/2 flex-col items-center justify-center bg-gray-50 py-32 font-poppins md:flex">
+    <div className="flex h-dvh w-full">
+      <section className="hidden h-dvh w-1/2 flex-col items-center justify-center bg-gray-50 py-32 font-poppins md:flex">
         {/* Logo */}
         <div className="my-auto flex items-center gap-4">
           <div className="flex h-16 w-16 items-center justify-center">

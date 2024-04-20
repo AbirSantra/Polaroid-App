@@ -9,14 +9,14 @@ const BottomBar = () => {
   const { user } = useUserContext();
 
   return (
-    <div className="flex h-16 w-full items-center justify-between border-t bg-white px-8 text-gray-700">
+    <div className="flex h-14 w-full items-center justify-between border-t bg-white px-8 text-gray-700">
       <NavLink
         to={"/"}
         className={({ isActive }) =>
           `group flex gap-4 ${isActive && "font-semibold text-rose-500"}`
         }
       >
-        <Home size={24} />
+        <Home size={20} />
       </NavLink>
       <NavLink
         to={"/explore"}
@@ -24,15 +24,15 @@ const BottomBar = () => {
           `group flex gap-4 ${isActive && "font-semibold text-rose-500"}`
         }
       >
-        <Search size={24} />
+        <Search size={20} />
       </NavLink>
       <Button
         variant={"primary"}
         size={"icon"}
-        className="rounded-full"
+        className="h-8 w-8 rounded-full"
         onClick={() => openModal("NEW-POST")}
       >
-        <PencilLine size={24} />
+        <PencilLine size={18} />
       </Button>
       <NavLink
         to={"/activity"}
@@ -40,7 +40,7 @@ const BottomBar = () => {
           `group flex gap-4 ${isActive && "font-semibold text-rose-500"}`
         }
       >
-        <Heart size={24} />
+        <Heart size={20} />
       </NavLink>
       <NavLink
         to={`/profile/${user._id}`}
@@ -48,7 +48,7 @@ const BottomBar = () => {
           `group flex gap-4 ${isActive && "font-semibold text-rose-500"}`
         }
       >
-        <UserRound size={24} />
+        <UserRound size={20} />
       </NavLink>
     </div>
   );
